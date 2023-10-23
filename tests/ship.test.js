@@ -11,7 +11,6 @@ describe('ship.hits', () => {
   it ('returns the correct amount of hits when a single hit is executed', () => {
     const myShip = ship(3);
     myShip.hit();
-    console.log(myShip.hits)
     
     expect(myShip.hits).toEqual(1);
   });
@@ -58,7 +57,6 @@ describe('ship.isSunk', () => {
     myShip.hit();
     myShip.hit();
     myShip.hit();
-    console.log(myShip.hits)
     
     const result = myShip.isSunk();
     
