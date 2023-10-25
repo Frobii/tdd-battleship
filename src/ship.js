@@ -4,7 +4,7 @@ const ship = (length) => {
     const hit = () => {
         if (hits < length) {
             hits++;
-        }
+        }; // else sink the ship TEST FIRST !!! :)
     };
 
     const isSunk = () => {

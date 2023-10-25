@@ -28,9 +28,7 @@ describe('gameboard.placeship', () => {
         const cruiser = ship(3);
         
         newGame.placeShip(cruiser, board, [0,3], 'h');
-        expect([board[0][3], 
-                board[0][4], 
-                board[0][5]]).toEqual([cruiser, cruiser, cruiser]);
+        expect([board[0][3], board[0][4], board[0][5]]).toEqual([cruiser, cruiser, cruiser]);
     });
     it('places a ship in the correct vertical position', () => {
         const newGame = gameboard();
@@ -38,9 +36,37 @@ describe('gameboard.placeship', () => {
         const cruiser = ship(3);
         
         newGame.placeShip(cruiser, board, [0,3], 'v');
-        expect([board[0][3], 
-                board[1][3], 
-                board[2][3]]).toEqual([cruiser, cruiser, cruiser]);
+        expect([board[0][3], board[1][3], board[2][3]]).toEqual([cruiser, cruiser, cruiser]);
+    });
+    it('wont place a ship out of bounds', () => {
+        const newGame = gameboard();
+        const board = newGame.board();
+        const cruiser = ship(3);
+        
+        const placementError = newGame.placeShip(cruiser, board, [0,9], 'h');
+        expect(placementError).toBe('Ship placement out of bounds!');
+        expect(board[0][9]).toBeUndefined();
+    })
+});
 
+describe('gameboard.receiveAttack', () => {
+    it('increments the hit counter when a ship is attacked', () => {
+        const newGame = gameboard();
+        const board = newGame.board();
+        const cruiser = ship(3);
+
+        newGame.placeShip(cruiser, board, [1,4], 'h');
+        newGame.receiveAttack([1,4], board);
+
+        expect(board[1][4].hits).toEqual(1);
+    });
+    it('places a marker when an attack misses', () => {
+        const newGame = gameboard();
+        const board = newGame.board();
+        const cruiser = ship(3);
+
+        newGame.placeShip(cruiser, board, [1,4], 'h');
+
+        expect(newGame.receiveAttack([2,4], board)).toBe('miss');
     });
 });

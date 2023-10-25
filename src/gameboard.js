@@ -6,28 +6,45 @@ const gameboard = () => {
 
         for (let i = 0; i < 10; i += 1) {
             board[i] = new Array(10)
-        }
-        return board
+        };
+        return board;
     };
 
     const placeShip = (ship, board, startPos, orientation) => {
         [x,y] = startPos;
-        length = ship.length;
-        
-        if (orientation === 'h') { // Placing the ship horizontally
-            for (i = 0; i < length; i += 1) {
-                board[x][y + i] = ship
-            }
-        } else if (orientation === 'v')  { // Placing the ship vertically
-            for (i = 0; i < length; i += 1) {
-                board[x + i][y] = ship
-            }
-        }
+        shipLength = ship.length;
+
+        if (orientation === 'h') {
+            if (y + shipLength > 10) {
+                return "Ship placement out of bounds!"
+            };
+            for (i = 0; i < shipLength; i += 1) {
+                board[x][y + i] = ship  // Placing the ship horizontally
+            };
+        } else if (orientation === 'v')  { 
+            if (x + shipLength > 10) {
+                return "Ship placement out of bounds!"
+            };
+            for (i = 0; i < shipLength; i += 1) {
+                board[x + i][y] = ship // Placing the ship vertically
+            };
+        };
+    };
+
+    const receiveAttack = (coordinates, board) => {
+        [x,y] = coordinates;
+
+        if (board[x][y] !== undefined) {
+            board[x][y].hit();
+        } else {
+            return 'miss';
+        };
     }
 
     return {
         board,
         placeShip,
+        receiveAttack,
     }
 };
 
