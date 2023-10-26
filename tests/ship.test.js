@@ -8,26 +8,26 @@ describe('ship.length', () => {
 });
 
 describe('ship.hits', () => {
+  let myShip;
+  beforeEach(() => {
+      myShip = ship(3);
+  });
   it ('returns the correct amount of hits when a single hit is executed', () => {
-    const myShip = ship(3);
     myShip.hit();
     
     expect(myShip.hits).toEqual(1);
   });
   it('allows the user to set the number of hits', () => {
-    const myShip = ship(3);
     myShip.hits = 2;
     
     expect(myShip.hits).toEqual(2);
   });
   it ('wont allow the user to set a number of hits greater than the length', () => {
-    const myShip = ship(3);
     myShip.hits = 4;
     
     expect(myShip.hits).toEqual(0);
   });
   it ('wont allow the user to set the number of hits below zero', () => {
-    const myShip = ship(3);
     myShip.hits = -4;
     
     expect(myShip.hits).toEqual(0);
@@ -35,14 +35,16 @@ describe('ship.hits', () => {
 });
 
 describe ('ship.hit', () => {
+  let myShip;
+  beforeEach(() => {
+      myShip = ship(2);
+  });
   it('returns one hit when hit is called', () => {
-    const myShip = ship(2)
     myShip.hit();
 
     expect(myShip.hits).toEqual(1);
   });
   it('does not increment hits when hits is equal to the length of the ship', () => {
-    const myShip = ship(2)
     myShip.hit();
     myShip.hit();
     myShip.hit();
@@ -52,7 +54,7 @@ describe ('ship.hit', () => {
 });
 
 describe('ship.isSunk', () => {
-  it('returns true if hits are greater than or equal to length', () => {
+  it('returns true if hits are equal to length', () => {
     const myShip = ship(3);
     myShip.hit();
     myShip.hit();
