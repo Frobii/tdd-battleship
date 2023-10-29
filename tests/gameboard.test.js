@@ -24,17 +24,28 @@ describe('gameboard', () => {
 describe('gameboard.placeship', () => {
     it('places a ship in the correct horizontal position', () => {
         newGame.placeShip(cruiser, board, [0,3], 'h');
-        expect([board[0][3], board[0][4], board[0][5]]).toEqual([cruiser, cruiser, cruiser]);
+
+        expect([board[0][3], board[1][3], board[2][3]]).toEqual([cruiser, cruiser, cruiser]);
     });
     it('places a ship in the correct vertical position', () => {
         newGame.placeShip(cruiser, board, [0,3], 'v');
-        expect([board[0][3], board[1][3], board[2][3]]).toEqual([cruiser, cruiser, cruiser]);
+
+        expect([board[0][3], board[0][4], board[0][5]]).toEqual([cruiser, cruiser, cruiser]);
     });
     it('wont place a ship out of bounds', () => {
-        const placementError = newGame.placeShip(cruiser, board, [0,9], 'h');
+        const placementError = newGame.placeShip(cruiser, board, [9,0], 'h');
+        
         expect(placementError).toBe('Ship placement out of bounds!');
         expect(board[0][9]).toBeUndefined();
-    })
+    });
+    it('stores successfully placed ships in the ships array', () => {
+        newGame.placeShip(cruiser, board, [0,0], 'h');
+
+        expect(newGame.ships[0]).toBe(cruiser);
+    });
+    it('does not store an unsuccessfully placed ship in the ships array', () => {
+        newGame.placeShip(cruiser, board, [9,0], 'h')
+    });
 });
 
 describe('gameboard.receiveAttack', () => {
@@ -44,22 +55,48 @@ describe('gameboard.receiveAttack', () => {
 
         expect(board[1][4].hits).toEqual(1);
     });
-    it('places a marker when an attack misses', () => {
-        newGame.placeShip(cruiser, board, [1,4], 'h');
+    it('places a miss string when an attack misses', () => {
+        newGame.placeShip(cruiser, board, [1,4], 'v');
 
         expect(newGame.receiveAttack([2,4], board)).toBe('miss');
     });
     it('returns false if a position has already been missed', () => {
+        newGame.placeShip(cruiser, board, [2,4], 'h');
+        newGame.receiveAttack([3,8], board);
 
+        expect(newGame.receiveAttack([3,8], board)).toBe(false);
     });
     it('returns false if a position has already been hit', () => {
+        newGame.placeShip(cruiser, board, [2,4], 'h');
+        newGame.receiveAttack([2,4], board);
 
+        expect(newGame.receiveAttack([2,4], board)).toBe(false);
     });
-});
-
-describe('gameboard.misses', () => {
-
     it('records misses', () => {
-        const newGame = gameboard();
+        newGame.placeShip(cruiser, board, [3,4], 'h');
+        newGame.receiveAttack([1,2], board);
+    
+        expect(newGame.misses[0]).toStrictEqual([1,2]);
     });
 });
+
+describe('gameboard.allSunk', () => {
+    it('returns true when all placed ships have been sunk', () => {
+        newGame.placeShip(cruiser, board, [3,4], 'h');
+        newGame.placeShip(battleship, board, [1,4], 'v');
+        const attacks = [[1,4],[1,5],[1,6],[1,7],[3,4],[4,4],[5,4]]
+        for (const attack of attacks) {
+            newGame.receiveAttack(attack, board);
+        };
+        expect(newGame.allSunk()).toBe(true);
+    });
+    it('returns false when any of the placed ships is still floating', () => {
+        newGame.placeShip(cruiser, board, [3,4], 'h');
+        newGame.placeShip(battleship, board, [1,4], 'v');
+        const attacks = [[1,4],[1,5],[1,6],[1,7],[3,4]]
+        for (const attack of attacks) {
+            newGame.receiveAttack(attack, board);
+        };
+        expect(newGame.allSunk()).toBe(false);
+    });
+})
