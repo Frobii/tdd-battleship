@@ -46,6 +46,20 @@ describe('gameboard.placeship', () => {
     it('does not store an unsuccessfully placed ship in the ships array', () => {
         newGame.placeShip(cruiser, board, [9,0], 'h')
     });
+    it('does not allow ships to be placed directly over others', () => {
+        newGame.placeShip(cruiser, board, [2,4] , 'h')
+
+        const returnValue = newGame.placeShip(battleship, board, [2,4], 'h');
+
+        expect(returnValue).toBe('Cannot place ships over others!');
+    });
+    it('does not allow ships to be placed indirectly over others', () => {
+        newGame.placeShip(cruiser, board, [2,4] , 'h')
+
+        const returnValue = newGame.placeShip(battleship, board, [3,3], 'v');
+        expect(returnValue).toBe('Cannot place ships over others!');
+        expect(board[3][3]).toBeUndefined();
+    });
 });
 
 describe('gameboard.receiveAttack', () => {

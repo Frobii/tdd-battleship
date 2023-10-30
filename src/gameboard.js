@@ -16,16 +16,34 @@ const gameboard = () => {
         [x,y] = startPos;
         shipLength = ship.length;
 
+        let errorMessage = null; 
+
         if (orientation === 'h') {
             if (x + shipLength > 10) {
                 return "Ship placement out of bounds!"
+            };
+            for (i = 0; i < shipLength; i += 1) { // check chosen positions for other ships
+                if (board[x + i][y] != undefined) {
+                    errorMessage =  'Cannot place ships over others!'
+                };
+            };
+            if (errorMessage) {
+                return errorMessage;
             };
             for (i = 0; i < shipLength; i += 1) {
                 board[x + i][y] = ship  // Placing the ship horizontally
             };
         } else if (orientation === 'v')  { 
             if (y + shipLength > 10) {
-                return "Ship placement out of bounds!"
+                return  "Ship placement out of bounds!"
+            };
+            for (i = 0; i < shipLength; i += 1) {
+                if (board[x][y + i] != undefined) {
+                    errorMessage =  'Cannot place ships over others!'
+                };
+            };
+            if (errorMessage) {
+                return errorMessage;
             };
             for (i = 0; i < shipLength; i += 1) {
                 board[x][y + i] = ship // Placing the ship vertically
