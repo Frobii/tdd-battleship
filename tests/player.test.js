@@ -6,8 +6,8 @@ let cpuBoard;
 let cruiser;
 let battleship;
 beforeEach(() => {
-    player = gameboard();
-    playerBoard = player.board();
+    let gameBoard = new gameBoard();
+
 
     cpu = gameboard();
     cpuBoard = cpu.board();
@@ -16,3 +16,8 @@ beforeEach(() => {
     battleship = ship(4);
 });
 
+describe('player.takeTurn', () => {
+    it('Does not allow the same player to take two turns in a row', () => {
+    
+    });
+});
