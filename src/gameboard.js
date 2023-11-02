@@ -67,7 +67,7 @@ const gameboard = () => {
             };
         };
 
-        if (playArea[x][y] !== undefined) {
+        if (playArea[x][y] != undefined) {
             hits.push(coordinates);
             playArea[x][y].hit();
             return true;

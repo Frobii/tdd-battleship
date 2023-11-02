@@ -6,11 +6,8 @@ let p1;
 let p1Board;
 let p1PlayArea;
 
-let p2;
-let p2Board;
-let p2PlayArea;
-
 let cpu;
+let cpuBoard;
 let cpuPlayArea;
 
 let cruiser;
@@ -69,7 +66,6 @@ describe('player.cpuTurn', () => {
         console.log(p1Board.hits.length)
         console.log(p1Board.misses.length)
         if (p1Board.hits.length + p1Board.misses.length === 100) {
-
             everythingHit = true
         };
         console.log(coordArray)
