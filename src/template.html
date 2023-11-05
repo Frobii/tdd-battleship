@@ -7,22 +7,36 @@
 </head>
 <body>
     <div class="header">
-        <div class="title">BATTLESHIP</div>
+        <div class="page-title">BATTLESHIP</div>
     </div>
     <div class="game-area">
-        <div class="frame       friendly-frame">
-            <div class="title       friendly-title"></div>
-            <div class="grid        friendly-grid"></div>
-            <div class="turn-info   enemy-turn-info"></div>
-            <div class="stats       friendly-stats"></div>
+        <div class="frame friendly-frame">
+            <div class="board-title friendly-title">FRIENDLY SEAS</div>
+            <div class="grid friendly-grid"></div>
+            <div class="turn-info enemy-turn-info"></div>
+            <div class="stats friendly-stats">
+                <div class="friendly stats-title">ENEMY SHIPS:</div>
+                <div class="friendly carrier-stats">CARRIER(5)</div>
+                <div class="friendly battleship-stats">BATTLESHIP(4)</div>
+                <div class="friendly destroyer-stats">DESTROYER (3)</div>
+                <div class="friendly submarine-stats">SUBMARINE (3)</div>
+                <div class="friendly patrol-boat-stats">PATROL BOAT (2)</div>
+            </div>
         </div>
-        <div class="frame       enemy-frame">
-            <div class="title       enemy-title"></div>
-            <div class="grid        enemy-grid"></div>
-            <div class="turn-info   friendly-turn-info"></div>
-            <div class="stats       enemy-stats"></div>
+        <div class="frame enemy-frame highlight-frame">
+            <div class="board-title enemy-title">ENEMY SEAS</div>
+            <div class="grid enemy-grid"></div>
+            <div class="turn-info friendly-turn-info"></div>
+            <div class="stats enemy-stats">
+                <div class="enemy stats-title">ENEMY SHIPS:</div>
+                <div class="enemy carrier-stats">CARRIER(5)</div>
+                <div class="enemy battleship-stats">BATTLESHIP(4)</div>
+                <div class="enemy destroyer-stats">DESTROYER (3)</div>
+                <div class="enemy submarine-stats">SUBMARINE (3)</div>
+                <div class="enemy patrol-boat-stats">PATROL BOAT (2)</div>
+            </div>
         </div>
     </div>
-    <div class="footer">source code</div>
+    <a href="https://github.com/Frobii/tdd-battleship" class="footer">source code</a>
 </body>
 </html>

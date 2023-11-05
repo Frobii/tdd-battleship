@@ -1,3 +1,82 @@
-.hello {
-    color: red;
-  }
+body {
+    background-color: rgba(0, 0, 0, 0.795);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+    margin: 0px;
+}
+
+a {
+    color: white;
+    text-decoration: inherit;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.header {
+    width: 100vw;
+    text-align: center;
+    padding-top: 20px;
+    font-size: 3rem;
+}
+
+.footer {
+    width: 100vw;
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 1rem;
+}
+
+.game-area {
+    padding-top: 60px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.frame {
+    width: 30rem;
+    height: 45rem;
+    border-radius: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.friendly-frame {
+    margin-right: 20px;
+}
+
+.frame.highlight-frame {
+    background-color: rgba(128, 128, 128, 0.541);
+}
+
+.board-title {
+    text-align: center;
+    padding-top: 10px;
+    font-size: 1.5rem;
+}
+
+.grid {
+    border: white solid 2px;
+    height: 28rem;
+    width: 28rem;
+    margin-top: 10px;
+}
+
+.turn-info {
+    height: 10%;
+    width: calc(28rem + 4px); /* account for grid border width */
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: calc(28rem + 4px);
+    height: 20%;
+}
