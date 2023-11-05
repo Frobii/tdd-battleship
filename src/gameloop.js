@@ -6,5 +6,4 @@ const gameloop = () => {
     };
 };
 
-
 module.exports = gameloop;
