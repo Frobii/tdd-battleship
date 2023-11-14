@@ -20,21 +20,33 @@ describe('gameloop.placeShipsAtRandom', () => {
         const p1PlayArea = gameLoop.p1Objects.p1PlayArea
         gameLoop.placeShipsAtRandom(p1PlayArea);
 
-        const expectedLengths = [2,3,3,4,5];
+        const shipLengths = [2,3,3,4,5];
+        let expectedLengths = [];
+        let foundLengths = [];
 
-        let shipLengths = [];
+        // build the array of the expected length attributes expected on a board which has had every ship placed
+        shipLengths.forEach((length) => {
+            for (i = 0; i < length; i += 1) {
+
+                expectedLengths.push(length)
+            }
+        });
+        console.log(expectedLengths)
+
+        // search every position on the board for a ship object 
         for (let x = 0; x <= 9; x++) {
             for (let y = 0; y <= 9; y++) {
-                let position = p1PlayArea[x][y]
+                let position = p1PlayArea[x][y] // Iterate over every position
                 if (position !== undefined) {
-                    shipLengths.push(position.length);
+                    foundLengths.push(position.length);
                 };
             };
         };
     
-        const sortedShipLengths = shipLengths.slice().sort();
-        // console.log('shiplengths',sortedShipLengths)
-        const allShipsPlaced = JSON.stringify(expectedLengths) === JSON.stringify(sortedShipLengths);
+        const sortedExpectedLengths = expectedLengths.slice().sort();
+        const sortedFoundLengths = foundLengths.slice().sort();
+
+        const allShipsPlaced = JSON.stringify(sortedExpectedLengths) === JSON.stringify(sortedFoundLengths);
         expect(allShipsPlaced).toBe(true);
     });
 });
