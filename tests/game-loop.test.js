@@ -24,25 +24,26 @@ describe('gameloop.placeShipsAtRandom', () => {
         let expectedLengths = [];
         let foundLengths = [];
 
-        // build the array of the expected length attributes expected on a board which has had every ship placed
+        // Build the array of expected ship lengths 
         shipLengths.forEach((length) => {
             for (i = 0; i < length; i += 1) {
-
                 expectedLengths.push(length)
             }
         });
         console.log(expectedLengths)
 
-        // search every position on the board for a ship object 
+        // search every position on the board for a ship object
         for (let x = 0; x <= 9; x++) {
             for (let y = 0; y <= 9; y++) {
-                let position = p1PlayArea[x][y] // Iterate over every position
+                let position = p1PlayArea[x][y]
                 if (position !== undefined) {
+                    // if a ship is found push it's length attribute to an array
                     foundLengths.push(position.length);
                 };
             };
         };
     
+        // sort the arrays so their JSON string is in the same alphanumeric order
         const sortedExpectedLengths = expectedLengths.slice().sort();
         const sortedFoundLengths = foundLengths.slice().sort();
 
