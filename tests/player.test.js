@@ -63,12 +63,9 @@ describe('player.cpuTurn', () => {
         for (i = 1; i <= 100; i += 1) {
             coordArray.push(cpu.cpuTurn(p1PlayArea, p1Board));
         };
-        console.log(p1Board.hits.length)
-        console.log(p1Board.misses.length)
         if (p1Board.hits.length + p1Board.misses.length === 100) {
             everythingHit = true
         };
-        console.log(coordArray)
         expect(everythingHit).toBe(true);
     });
 });
