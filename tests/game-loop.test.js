@@ -17,8 +17,10 @@ describe('gameloop', () => {
 });
 describe('gameloop.placeShipsAtRandom', () => {
     it('Places a ship of every size at random on the given playArea', () => {
-        const p1PlayArea = gameLoop.p1Objects.p1PlayArea
-        gameLoop.placeShipsAtRandom(p1PlayArea);
+        const p1Objects = gameLoop.p1Objects;
+        const p1PlayArea = p1Objects.p1PlayArea;
+        const p1Board = p1Objects.p1Board;
+        gameLoop.placeShipsAtRandom(p1PlayArea, p1Board);
 
         const shipLengths = [2,3,3,4,5];
         let expectedLengths = [];
@@ -30,7 +32,6 @@ describe('gameloop.placeShipsAtRandom', () => {
                 expectedLengths.push(length)
             }
         });
-        console.log(expectedLengths)
 
         // search every position on the board for a ship object
         for (let x = 0; x <= 9; x++) {
