@@ -80,3 +80,6 @@ a:hover {
     width: calc(28rem + 4px);
     height: 20%;
 }
+
+/* Report on ship status (floating/sunk) to the 
+LEFT of the ship name (unlike the example page) */
