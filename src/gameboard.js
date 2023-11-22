@@ -22,8 +22,8 @@ const gameboard = () => {
             if (x + shipLength > 10) {
                 return "Ship placement out of bounds!"
             };
-            for (i = 0; i < shipLength; i += 1) { // check chosen positions for other ships
-                if (playArea[x + i][y] != undefined) {
+            for (i = 0; i < shipLength; i += 1) {
+                if (playArea[x + i][y] != undefined) { // check chosen positions for other ships
                     errorMessage =  'Cannot place ships over others!'
                 };
             };
