@@ -1,4 +1,4 @@
-const ship = (length) => {
+const ship = (length, name = 'Default Ship') => {
     let hits = 0;
 
     const hit = () => {
@@ -12,6 +12,7 @@ const ship = (length) => {
     };
 
     return {
+        name,
         length, 
         get hits() {
             return hits
