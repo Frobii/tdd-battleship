@@ -1,6 +1,7 @@
 const paintBoard = () => {
     const paintFriendly = (playArea, misses, hits) => {
         const gridContainer = document.querySelector('.friendly-grid');
+        gridContainer.innerHtml = ''; // Clear all of the child nodes from the previous run
         
         for (let i = 0; i < 10; i++) {
             const row = document.createElement('div');
@@ -30,7 +31,8 @@ const paintBoard = () => {
     };
 
     const paintEnemy = () => {
-        const gridContainer = document.getElementById('.enemy-grid')
+        const gridContainer = document.querySelector('.enemy-grid')
+        gridContainer.innerHtml = ''; // Clear all of the child nodes from the previous run
         
         for (let i = 0; i < 10; i++) {
             const row = document.createElement('div');

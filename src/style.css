@@ -68,6 +68,17 @@ a:hover {
     margin-top: 10px;
 }
 
+.grid-row {
+    width: 100%;
+    height: 10%;
+    display: flex;
+}
+
+.grid-item {
+    height: 100%;
+    width: 10%;
+}
+
 .turn-info {
     height: 10%;
     width: calc(28rem + 4px); /* account for grid border width */
