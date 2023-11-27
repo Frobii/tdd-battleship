@@ -92,5 +92,23 @@ a:hover {
     height: 20%;
 }
 
+.grid-item {
+    border: 0.5px solid grey;
+}
+
+.miss {
+    background-color: turquoise;
+}
+
+.enemy-hit {
+    background-color: red;
+}
+
+.friendly-hit {
+    background-color: red;
+}
+
+
+
 /* Report on ship status (floating/sunk) to the 
 LEFT of the ship name (unlike the example page) */

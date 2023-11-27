@@ -1,38 +1,42 @@
 const paintBoard = () => {
+    const containsCoords = (array, coordinates) =>  {
+        return array.some(coord => coord.every((value, index) => value === coordinates[index])) 
+    };
+
     const paintFriendly = (playArea, misses, hits) => {
         const gridContainer = document.querySelector('.friendly-grid');
-        gridContainer.innerHtml = ''; // Clear all of the child nodes from the previous run
+        gridContainer.innerHTML = ''; // Clear all of the child nodes from the previous run
         
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 10; i++) { // i = y axis
             const row = document.createElement('div');
             row.classList.add('grid-row');
             
-            for (let j = 0; j < 10; j++) {
+            for (let j = 0; j < 10; j++) { // j = x axis
                 const cell = document.createElement('div');
                 cell.classList.add('grid-item');
                 const possibleShip = playArea[i][j];
                 
-                if (misses.includes([i][j])) {
+                if (containsCoords(misses, [i,j])) {
                     cell.classList.add('miss')
-                } else if (hits.includes([i][j])) {
+                } else if (containsCoords(hits, [i,j])) {
                     cell.classList.add('friendly-hit')
                 };
-                
+
                 // only friendly ships should ever recieve the ship class
                 // enemy ships are never given graphics
                 if (possibleShip !== undefined) {
                     cell.classList.add('ship');
                     cell.classList.add(ship.name); 
-                } ;
+                };
                 row.appendChild(cell);
             };
             gridContainer.appendChild(row);
         };
     };
 
-    const paintEnemy = () => {
+    const paintEnemy = (misses, hits) => {
         const gridContainer = document.querySelector('.enemy-grid')
-        gridContainer.innerHtml = ''; // Clear all of the child nodes from the previous run
+        gridContainer.innerHTML = ''; // Clear all of the child nodes from the previous run
         
         for (let i = 0; i < 10; i++) {
             const row = document.createElement('div');
@@ -42,9 +46,9 @@ const paintBoard = () => {
                 const cell = document.createElement('div');
                 cell.classList.add('grid-item');
                 
-                if (misses.includes([i][j])) {
+                if (containsCoords(misses, [i,j])) {
                     cell.classList.add('miss')
-                } else if (hits.includes([i][j])) {
+                } else if (containsCoords(hits, [i,j])) {
                     cell.classList.add('enemy-hit')
                 };
                 
