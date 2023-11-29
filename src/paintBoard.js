@@ -3,10 +3,13 @@ const paintBoard = () => {
         return array.some(coord => coord.every((value, index) => value === coordinates[index])) 
     };
 
-    const paintFriendly = (playArea, misses, hits) => {
+    const paintFriendly = (gameboard, playArea) => {
         const gridContainer = document.querySelector('.friendly-grid');
         gridContainer.innerHTML = ''; // Clear all of the child nodes from the previous run
         
+        let misses = gameboard.misses;
+        let hits = gameboard.hits;
+
         for (let i = 0; i < 10; i++) { // i = y axis
             const row = document.createElement('div');
             row.classList.add('grid-row');
@@ -34,9 +37,12 @@ const paintBoard = () => {
         };
     };
 
-    const paintEnemy = (misses, hits) => {
+    const paintEnemy = (gameboard, playArea) => {
         const gridContainer = document.querySelector('.enemy-grid')
         gridContainer.innerHTML = ''; // Clear all of the child nodes from the previous run
+
+        let misses = gameboard.misses;
+        let hits = gameboard.hits;
         
         for (let i = 0; i < 10; i++) {
             const row = document.createElement('div');
@@ -45,6 +51,11 @@ const paintBoard = () => {
             for (let j = 0; j < 10; j++) {
                 const cell = document.createElement('div');
                 cell.classList.add('grid-item');
+                cell.addEventListener('click', () => {
+                    gameboard.receiveAttack([i,j], playArea)
+                    paintEnemy(gameboard, playArea)
+                    console.log(misses)
+                })
                 
                 if (containsCoords(misses, [i,j])) {
                     cell.classList.add('miss')

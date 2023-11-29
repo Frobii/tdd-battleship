@@ -12,8 +12,8 @@ p1Board.hits.push([2,9])
 
 let cpuObjects = newGame.cpuObjects;
 let cpuBoard = cpuObjects.cpuBoard;
-cpuBoard.misses.push([0,5])
-cpuBoard.hits.push([5,4])
+let cpuPlayArea = cpuObjects.cpuPlayArea;
 
-paintBoard().paintFriendly(p1PlayArea, p1Board.misses, p1Board.hits);
-paintBoard().paintEnemy(cpuBoard.misses, cpuBoard.hits);
+paintBoard().paintFriendly(p1Board, p1PlayArea);
+paintBoard().paintEnemy(cpuBoard, cpuPlayArea);
+newGame.placeShipsAtRandom(cpuPlayArea, cpuBoard);
