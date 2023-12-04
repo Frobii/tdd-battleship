@@ -1,5 +1,6 @@
 const gameboard = require('../src/gameboard.js');
-const ship = require('../src/ship.js')
+const ship = require('../src/ship.js');
+const gameloop = require('../src/gameloop.js');
 
 let newGame;
 let playArea;
@@ -10,6 +11,7 @@ beforeEach(() => {
     playArea = newGame.playArea();
     cruiser = ship(3);
     battleship = ship(4);
+    gameLoop = gameloop();  
 });
 
 describe('gameboard', () => {
@@ -19,7 +21,7 @@ describe('gameboard', () => {
         // check the length of the inner arrays
         expect(playArea.every(row => row.length === 10)).toBe(true);
     })
-})
+});
 
 describe('gameboard.placeship', () => {
     it('places a ship in the correct horizontal position', () => {
@@ -59,6 +61,44 @@ describe('gameboard.placeship', () => {
         const returnValue = newGame.placeShip(battleship, playArea, [3,3], 'v');
         expect(returnValue).toBe('Cannot place ships over others!');
         expect(playArea[3][3]).toBeUndefined();
+    });
+});
+
+describe('gameboard.placeShipsAtRandom', () => {
+    it('Places a ship of every size at random on the given playArea', () => {
+        const p1Objects = gameLoop.p1Objects;
+        const p1PlayArea = p1Objects.p1PlayArea;
+        const p1Board = p1Objects.p1Board;
+        newGame.placeShipsAtRandom(p1PlayArea, p1Board);
+
+        const shipLengths = [2,3,3,4,5];
+        let expectedLengths = [];
+        let foundLengths = [];
+
+        // Build the array of expected ship lengths 
+        shipLengths.forEach((length) => {
+            for (i = 0; i < length; i += 1) {
+                expectedLengths.push(length)
+            }
+        });
+
+        // search every position on the board for a ship object
+        for (let x = 0; x <= 9; x++) {
+            for (let y = 0; y <= 9; y++) {
+                let position = p1PlayArea[x][y]
+                if (position !== undefined) {
+                    // if a ship is found push it's length attribute to an array
+                    foundLengths.push(position.length);
+                };
+            };
+        };
+    
+        // sort the arrays so their JSON string is in the same alphanumeric order
+        const sortedExpectedLengths = expectedLengths.slice().sort();
+        const sortedFoundLengths = foundLengths.slice().sort();
+
+        const allShipsPlaced = JSON.stringify(sortedExpectedLengths) === JSON.stringify(sortedFoundLengths);
+        expect(allShipsPlaced).toBe(true);
     });
 });
 
@@ -113,4 +153,4 @@ describe('gameboard.allSunk', () => {
         };
         expect(newGame.allSunk()).toBe(false);
     });
-})
+});
