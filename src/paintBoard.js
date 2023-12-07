@@ -4,6 +4,12 @@ const paintBoard = () => {
     };
 
     const paintFriendly = (gameboard, playArea) => {
+        const enemyFrame = document.querySelector('.enemy-frame');
+        enemyFrame.classList.remove('highlight-frame');
+
+        const friendlyFrame = document.querySelector('.friendly-frame');
+        friendlyFrame.classList.add('highlight-frame');
+
         const gridContainer = document.querySelector('.friendly-grid');
         gridContainer.innerHTML = ''; // Clear all of the child nodes from the previous run
         
@@ -28,8 +34,9 @@ const paintBoard = () => {
                 // only friendly ships should ever recieve the ship class
                 // enemy ships are never given graphics
                 if (possibleShip !== undefined) {
+                    let shipName = possibleShip.name
                     cell.classList.add('ship');
-                    cell.classList.add(ship.name); 
+                    cell.classList.add(shipName); 
                 };
                 row.appendChild(cell);
             };
@@ -38,6 +45,12 @@ const paintBoard = () => {
     };
 
     const paintEnemy = (gameboard, playArea) => {
+        const friendlyFrame = document.querySelector('.friendly-frame')
+        friendlyFrame.classList.remove('highlight-frame');
+
+        const enemyFrame = document.querySelector('.enemy-frame');
+        enemyFrame.classList.add('highlight-frame');
+
         const gridContainer = document.querySelector('.enemy-grid')
         gridContainer.innerHTML = ''; // Clear all of the child nodes from the previous run
 

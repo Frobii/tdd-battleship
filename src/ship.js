@@ -1,4 +1,4 @@
-const ship = (length, name = 'Default Ship') => {
+const ship = (length, name = 'default-ship') => {
     let hits = 0;
 
     const hit = () => {

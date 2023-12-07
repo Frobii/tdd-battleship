@@ -135,18 +135,17 @@ const gameboard = () => {
             return coordinates
         };
 
-        let carrier = ship(5);
-        let battleship = ship(4);
-        let destroyer = ship(3);
-        let submarine = ship(3);
-        let patrolBoat = ship(2);
+        let carrier = ship(5, 'carrier');
+        let battleship = ship(4, 'battleship');
+        let destroyer = ship(3,'destroyer');
+        let submarine = ship(3, 'submarine');
+        let patrolBoat = ship(2, 'patrol-boat');
         let ships = [carrier, battleship, destroyer, submarine, patrolBoat];
         let placedCoords = [];
 
         ships.forEach((ship) => {
             let orientation =  getRandomOrientation();
             let startPos = getRandomCoords(placedCoords, ship, orientation);
-            console.log(ship.length, orientation, startPos);
             gameboard.placeShip(ship, playArea, startPos, orientation);
         });
     };

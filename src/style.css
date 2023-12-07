@@ -108,6 +108,10 @@ a:hover {
     background-color: red;
 }
 
+.ship {
+    background-color: lime;
+}
+
 
 
 /* Report on ship status (floating/sunk) to the 

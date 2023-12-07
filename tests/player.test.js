@@ -28,23 +28,6 @@ beforeEach(() => {
     cpuBoard.placeShip(cruiser, cpuPlayArea, [4,4], 'h')
 });
 
-describe('player.userTurn', () => {
-    it('Allows a player to miss a shot', () => {
-        p1.userTurn([0,2], cpuPlayArea, cpuBoard);
-
-        const movesMade = cpuBoard.misses.length;
-
-        expect(movesMade).toBe(1);
-    });
-    it('Allows a player to hit a shot', () => {
-        p1.userTurn([4,4], cpuPlayArea, cpuBoard);
-
-        const enemyCruiserHits = cpuPlayArea[4][4].hits
-
-        expect(enemyCruiserHits).toBe(1);
-    });
-});
-
 describe('player.cpuTurn', () => {
     it('Cannnot make the same move twice when all moves are misses', () => {
         let everythingHit = false;

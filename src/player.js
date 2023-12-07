@@ -20,13 +20,24 @@ const player = () => {
         return coordinates;
     };
 
-    const userTurn = (coordinates, enemyPlayArea, enemyGameBoard) => {
-        enemyGameBoard.receiveAttack(coordinates, enemyPlayArea)
+    const waitForPlayerTurn = () => {
+        const enemyGrid = document.querySelector('.enemy-grid')
+        return new Promise((resolve) => {
+
+            // Set up an event listener for the player's turn
+            enemyGrid.addEventListener('click', function playerClickListener() {
+                // Remove the event listener to prevent multiple clicks
+                enemyGrid.removeEventListener('click', playerClickListener);
+                
+                // Resolve the promise to continue the game loop
+                resolve();
+            });
+        });
     };
 
     return {
         cpuTurn,
-        userTurn,
+        waitForPlayerTurn,
     };
 };
 
