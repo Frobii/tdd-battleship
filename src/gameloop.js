@@ -18,16 +18,24 @@ const gameloop = () => {
     async function vsCPU() {
         cpuBoard.placeShipsAtRandom(cpuObjects.cpuPlayArea, cpuObjects.cpuBoard);
         p1Board.placeShipsAtRandom(p1Objects.p1PlayArea, p1Objects.p1Board);
+        paintDOM.paintFriendly(p1Objects.p1Board, p1Objects.p1PlayArea);
         while (!p1Board.allSunk() && !cpuBoard.allSunk()) {
-            paintDOM.paintFriendly(p1Objects.p1Board, p1Objects.p1PlayArea);
-            
+            // Highlight & paint the enemy board
+            paintDOM.paintEnemy(cpuObjects.cpuBoard, cpuObjects.cpuPlayArea);
+            // Enable clicks on the enemy board so the player can take a turn
+            paintDOM.toggleEnemyClickable();
             // Wait for the player's turn
             await p1.waitForPlayerTurn();
-            
-            paintDOM.paintEnemy(cpuObjects.cpuBoard, cpuObjects.cpuPlayArea);
-            
+            // Disable clicks on the enemy board during the CPU's turn
+            paintDOM.toggleEnemyClickable();
+            // Highligh the friendly board
+            paintDOM.highlightFriendly();
+            // Delay the CPU's turn
+            await new Promise(resolve => setTimeout(resolve, 900));
             // Execute CPU's turn
             cpu.cpuTurn(p1PlayArea, p1Board);
+            // Paint the player's board
+            paintDOM.paintFriendly(p1Objects.p1Board, p1Objects.p1PlayArea);
         };
     };
    

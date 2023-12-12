@@ -1,15 +1,38 @@
 const paintBoard = () => {
+    let enemyClickable = true;
+
+    const toggleEnemyClickable = () => {
+        const enemyGrid = document.querySelector('.enemy-grid');
+        if (enemyClickable) {
+            enemyGrid.style.pointerEvents = 'auto';
+            enemyClickable = false;
+        } else {
+            enemyGrid.style.pointerEvents = 'none';
+            enemyClickable = true;
+        };
+    };
+    
+    const highlightFriendly = () => {
+        const enemyFrame = document.querySelector('.enemy-frame');
+        enemyFrame.classList.remove('highlight-frame');
+        
+        const friendlyFrame = document.querySelector('.friendly-frame');
+        friendlyFrame.classList.add('highlight-frame');
+    };
+    
+    const highlightEnemy = () => {
+        const friendlyFrame = document.querySelector('.friendly-frame')
+        friendlyFrame.classList.remove('highlight-frame');
+        
+        const enemyFrame = document.querySelector('.enemy-frame');
+        enemyFrame.classList.add('highlight-frame');
+    };
+    
     const containsCoords = (array, coordinates) =>  {
         return array.some(coord => coord.every((value, index) => value === coordinates[index])) 
     };
 
     const paintFriendly = (gameboard, playArea) => {
-        const enemyFrame = document.querySelector('.enemy-frame');
-        enemyFrame.classList.remove('highlight-frame');
-
-        const friendlyFrame = document.querySelector('.friendly-frame');
-        friendlyFrame.classList.add('highlight-frame');
-
         const gridContainer = document.querySelector('.friendly-grid');
         gridContainer.innerHTML = ''; // Clear all of the child nodes from the previous run
         
@@ -22,7 +45,8 @@ const paintBoard = () => {
             
             for (let j = 0; j < 10; j++) { // j = x axis
                 const cell = document.createElement('div');
-                cell.classList.add('grid-item');
+                cell.classList.add('cell');
+                cell.classList.add('friendly-cell');
                 const possibleShip = playArea[i][j];
                 
                 if (containsCoords(misses, [i,j])) {
@@ -45,12 +69,7 @@ const paintBoard = () => {
     };
 
     const paintEnemy = (gameboard, playArea) => {
-        const friendlyFrame = document.querySelector('.friendly-frame')
-        friendlyFrame.classList.remove('highlight-frame');
-
-        const enemyFrame = document.querySelector('.enemy-frame');
-        enemyFrame.classList.add('highlight-frame');
-
+        highlightEnemy(); // The enemy is always the first to be targeted
         const gridContainer = document.querySelector('.enemy-grid')
         gridContainer.innerHTML = ''; // Clear all of the child nodes from the previous run
 
@@ -63,12 +82,12 @@ const paintBoard = () => {
             
             for (let j = 0; j < 10; j++) {
                 const cell = document.createElement('div');
-                cell.classList.add('grid-item');
+                cell.classList.add('cell');
+                cell.classList.add('enemy-cell');
                 cell.addEventListener('click', () => {
                     gameboard.receiveAttack([i,j], playArea)
                     paintEnemy(gameboard, playArea)
-                    console.log(misses)
-                })
+                });
                 
                 if (containsCoords(misses, [i,j])) {
                     cell.classList.add('miss')
@@ -83,6 +102,8 @@ const paintBoard = () => {
     };
 
     return {
+        toggleEnemyClickable,
+        highlightFriendly,
         paintFriendly,
         paintEnemy,
     };

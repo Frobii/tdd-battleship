@@ -62,7 +62,8 @@ a:hover {
 }
 
 .grid {
-    border: white solid 2px;
+    box-sizing: border-box;
+    border: 2px solid white;
     height: 28rem;
     width: 28rem;
     margin-top: 10px;
@@ -74,9 +75,10 @@ a:hover {
     display: flex;
 }
 
-.grid-item {
+.cell {
     height: 100%;
     width: 10%;
+    border: 0.5px solid grey;
 }
 
 .turn-info {
@@ -92,10 +94,6 @@ a:hover {
     height: 20%;
 }
 
-.grid-item {
-    border: 0.5px solid grey;
-}
-
 .miss {
     background-color: turquoise;
 }
@@ -104,12 +102,12 @@ a:hover {
     background-color: red;
 }
 
-.friendly-hit {
-    background-color: red;
-}
-
 .ship {
     background-color: lime;
+}
+/* Maintain friendly-hit's priority over .ship styles */
+.friendly-hit {
+    background-color: red;
 }
 
 

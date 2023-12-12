@@ -21,16 +21,21 @@ const player = () => {
     };
 
     const waitForPlayerTurn = () => {
-        const enemyGrid = document.querySelector('.enemy-grid')
-        return new Promise((resolve) => {
+        const enemyCells = document.getElementsByClassName('enemy-cell');
+        const cellsArray = Array.from(enemyCells);
 
-            // Set up an event listener for the player's turn
-            enemyGrid.addEventListener('click', function playerClickListener() {
-                // Remove the event listener to prevent multiple clicks
-                enemyGrid.removeEventListener('click', playerClickListener);
-                
-                // Resolve the promise to continue the game loop
-                resolve();
+        return new Promise((resolve) => {
+            cellsArray.forEach((cell) => {
+                if (cell.classList.contains('miss') || cell.classList.contains('enemy-hit')) {
+                    // Prevent click event if the position has been targeted before
+                    cell.style.pointerEvents = 'none'; 
+                }
+                cell.addEventListener('click', function playerClickListener() {
+                    // Remove the event listener to prevent multiple clicks
+                    cell.removeEventListener('click', playerClickListener);
+                    // Resolve the promise to continue the game loop
+                    resolve();
+                });
             });
         });
     };
