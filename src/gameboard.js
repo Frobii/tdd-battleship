@@ -168,7 +168,7 @@ const gameboard = () => {
         if (playArea[x][y] != undefined) {
             hits.push(coordinates);
             playArea[x][y].hit();
-            return true;
+            return 'hit';
         } else {
             misses.push(coordinates);
             return 'miss';
