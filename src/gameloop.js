@@ -19,28 +19,40 @@ const gameloop = () => {
         cpuBoard.placeShipsAtRandom(cpuObjects.cpuPlayArea, cpuObjects.cpuBoard);
         p1Board.placeShipsAtRandom(p1Objects.p1PlayArea, p1Objects.p1Board);
         paintDOM.paintFriendly(p1Objects.p1Board, p1Objects.p1PlayArea);
-        let currentHitsLength = cpuObjects.cpuBoard.hits.length
+        let currentCPUHitsLength = cpuObjects.cpuBoard.hits.length;
+        let currentP1HitsLength = p1Objects.p1Board.hits.length;
         while (!p1Board.allSunk() && !cpuBoard.allSunk()) {
             // Highlight & paint the enemy board
             paintDOM.paintEnemy(cpuObjects.cpuBoard, cpuObjects.cpuPlayArea);
             // Enable clicks on the enemy board so the player can take a turn
             paintDOM.toggleEnemyClickable();
+
             // Wait for the player's turn
             do {
-                currentHitsLength = cpuObjects.cpuBoard.hits.length
+                currentCPUHitsLength = cpuObjects.cpuBoard.hits.length
                 await p1.waitForPlayerTurn();
             // Give the player an extra turn if they land a shot
-            } while (cpuObjects.cpuBoard.hits.length > currentHitsLength) 
+            } while (cpuObjects.cpuBoard.hits.length > currentCPUHitsLength)
+            // Delay the time between turn swaps
+            await new Promise(resolve => setTimeout(resolve, 30));
             // Disable clicks on the enemy board during the CPU's turn
             paintDOM.toggleEnemyClickable();
             // Highligh the friendly board
             paintDOM.highlightFriendly();
-            // Delay the CPU's turn
-            await new Promise(resolve => setTimeout(resolve, 900));
+
             // Execute CPU's turn
-            cpu.cpuTurn(p1PlayArea, p1Board);
+            do {
+                // Delay the CPU's turn
+                await new Promise(resolve => setTimeout(resolve, 900));
+                currentP1HitsLength = p1Objects.p1Board.hits.length
+                cpu.cpuTurn(p1PlayArea, p1Board);
+                paintDOM.paintFriendly(p1Objects.p1Board, p1Objects.p1PlayArea);
+            } while (p1Objects.p1Board.hits.length > currentP1HitsLength)
+            
             // Paint the player's board
             paintDOM.paintFriendly(p1Objects.p1Board, p1Objects.p1PlayArea);
+            // Delay the time between turn swaps
+            await new Promise(resolve => setTimeout(resolve, 30));
         };
     };
    
