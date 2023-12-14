@@ -28,7 +28,7 @@ const player = () => {
             cellsArray.forEach((cell) => {
                 if (cell.classList.contains('miss') || cell.classList.contains('enemy-hit')) {
                     // Prevent click event if the position has been targeted before
-                    cell.style.pointerEvents = 'none'; 
+                    cell.style.pointerEvents = 'none';
                 }
                 cell.addEventListener('click', function playerClickListener() {
                     // Remove the event listener to prevent multiple clicks
