@@ -98,6 +98,10 @@ a:hover {
     background-color: turquoise;
 }
 
+.enemy-cell:hover {
+    background-color: grey;
+}
+
 .enemy-hit {
     background-color: red;
 }
@@ -109,6 +113,3 @@ a:hover {
 .friendly-hit {
     background-color: red;
 }
-
-/* Report on ship status (floating/sunk) to the 
-LEFT of the ship name (unlike the example page) */
