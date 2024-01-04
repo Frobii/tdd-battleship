@@ -1,6 +1,5 @@
 const gameboard = require('../src/gameboard.js');
 const ship = require('../src/ship.js');
-const gameloop = require('../src/gameloop.js');
 
 let newGame;
 let playArea;
@@ -11,7 +10,6 @@ beforeEach(() => {
     playArea = newGame.playArea();
     cruiser = ship(3);
     battleship = ship(4);
-    gameLoop = gameloop();  
 });
 
 describe('gameboard', () => {
@@ -66,9 +64,8 @@ describe('gameboard.placeship', () => {
 
 describe('gameboard.placeShipsAtRandom', () => {
     it('Places a ship of every size at random on the given playArea', () => {
-        const p1Objects = gameLoop.p1Objects;
-        const p1PlayArea = p1Objects.p1PlayArea;
-        const p1Board = p1Objects.p1Board;
+        const p1Board = gameboard();
+        const p1PlayArea = p1Board.playArea();
         newGame.placeShipsAtRandom(p1PlayArea, p1Board);
 
         const shipLengths = [2,3,3,4,5];

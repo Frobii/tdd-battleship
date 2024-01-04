@@ -63,10 +63,10 @@ const gameloop = () => {
         p1Board.placeShipsAtRandom(p1PlayArea, p1Board);
 
         // used for testing
-        cpuBoard.ships[0].hits = 5; 
-        cpuBoard.ships[1].hits = 4; 
-        cpuBoard.ships[2].hits = 3; 
-        cpuBoard.ships[3].hits = 3; 
+        // cpuBoard.ships[0].hits = 5; 
+        // cpuBoard.ships[1].hits = 4; 
+        // cpuBoard.ships[2].hits = 3; 
+        // cpuBoard.ships[3].hits = 3; 
 
         // used for testing
         // p1Board.ships[0].hits = 5; 
@@ -87,13 +87,8 @@ const gameloop = () => {
                 currentCPUHitsLength = cpuBoard.hits.length
                 await p1.waitForPlayerTurn();
 
-
-
                 // used for testing
-                cpuBoard.ships[4].hits = 2; 
-
-
-
+                // cpuBoard.ships[4].hits = 2; 
 
                 if (checkForP1Win() === 'win') {
                     return
@@ -114,11 +109,8 @@ const gameloop = () => {
                 cpu.cpuTurn(p1PlayArea, p1Board);
                 paintDOM.paintFriendly(p1Board, p1PlayArea);
 
-
                 // used for testing
-                p1Board.ships[4].hits = 2; 
-
-
+                // p1Board.ships[4].hits = 2; 
 
                 checkForCPUWin(); // Check if the CPU made a winning move
             } while (p1Board.hits.length > currentP1HitsLength)

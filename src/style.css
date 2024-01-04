@@ -94,12 +94,13 @@ a:hover {
     height: 20%;
 }
 
-.miss {
-    background-color: turquoise;
-}
-
 .enemy-cell:hover {
     background-color: grey;
+    cursor: pointer;
+}
+
+.miss {
+    background-color: turquoise;
 }
 
 .enemy-hit {
