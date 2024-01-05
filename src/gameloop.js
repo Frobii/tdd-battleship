@@ -15,6 +15,27 @@ const gameloop = () => {
 
     const gameOverScreen = document.querySelector('.game-over-screen');
     const gameOverText = document.querySelector('.game-over-text');
+
+    const setRandomizeButton = () => {
+        const randomizeButton = document.querySelector('.randomize-placement')
+        randomizeButton.addEventListener('click', () => {
+            p1Board.ships = [];
+            p1PlayArea = p1Board.playArea();
+            p1Board.placeShipsAtRandom(p1PlayArea, p1Board);
+            paintDOM.paintFriendly(p1Board, p1PlayArea);
+        });
+    };
+    setRandomizeButton();
+
+    const setResetButton = () => {
+        const resetButton = document.querySelector('.reset-placement');
+        resetButton.addEventListener('click', () => {
+            p1Board.ships = [];
+            p1PlayArea = p1Board.playArea();
+            paintDOM.paintFriendly(p1Board, p1PlayArea);
+        });
+    }
+    setResetButton();
     
     const setResetGameEvent = () => {
         const resetGameButton = document.querySelector('.reset-game');
@@ -31,15 +52,16 @@ const gameloop = () => {
     };
     setResetGameEvent();
 
-    // used for testing
-    // p1Board.ships[0].hits = 5;
-    // p1Board.ships[1].hits = 5;
-    // p1Board.ships[2].hits = 5;
-    // p1Board.ships[3].hits = 5;
-    // p1Board.ships[4].hits = 5;
-
-    // used for testing
-    // setResetGameEvent();
+    const setConfirmPlacementEvent = () => {
+        const confirmButton = document.querySelector('.confirm-placement')
+        confirmButton.addEventListener('click', () => {
+            console.log(p1Board.ships.length)
+            if (p1Board.ships.length === 5) {
+                alert('ships length is 5')
+            }
+        });
+    };
+    setConfirmPlacementEvent();
     
     const checkForP1Win = () => {
         if (cpuBoard.allSunk()) {
