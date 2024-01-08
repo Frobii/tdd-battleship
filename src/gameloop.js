@@ -19,7 +19,7 @@ const gameloop = () => {
     const setRandomizeButton = () => {
         const randomizeButton = document.querySelector('.randomize-placement')
         randomizeButton.addEventListener('click', () => {
-            p1Board.ships = [];
+            p1Board.ships.length = 0;
             p1PlayArea = p1Board.playArea();
             p1Board.placeShipsAtRandom(p1PlayArea, p1Board);
             paintDOM.paintFriendly(p1Board, p1PlayArea);
@@ -30,7 +30,7 @@ const gameloop = () => {
     const setResetButton = () => {
         const resetButton = document.querySelector('.reset-placement');
         resetButton.addEventListener('click', () => {
-            p1Board.ships = [];
+            p1Board.ships.length = 0;
             p1PlayArea = p1Board.playArea();
             paintDOM.paintFriendly(p1Board, p1PlayArea);
         });
@@ -62,7 +62,7 @@ const gameloop = () => {
         });
     };
     setConfirmPlacementEvent();
-    
+
     const checkForP1Win = () => {
         if (cpuBoard.allSunk()) {
             gameOverScreen.style.display = 'flex';
