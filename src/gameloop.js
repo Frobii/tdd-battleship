@@ -15,9 +15,17 @@ const gameloop = () => {
 
     const gameOverScreen = document.querySelector('.game-over-screen');
     const gameOverText = document.querySelector('.game-over-text');
+    const randomizeButton = document.querySelector('.randomize-placement');
+    const resetPlacementButton = document.querySelector('.reset-placement');
+    const confirmButton = document.querySelector('.confirm-placement');
+    const resetGameButton = document.querySelector('.reset-game');
+    const enemyFrame = document.querySelector('.enemy-frame');
+
+    const centerFriendly = () => {
+        enemyFrame.style.display = 'none';
+    }
 
     const setRandomizeButton = () => {
-        const randomizeButton = document.querySelector('.randomize-placement')
         randomizeButton.addEventListener('click', () => {
             p1Board.ships.length = 0;
             p1PlayArea = p1Board.playArea();
@@ -25,20 +33,28 @@ const gameloop = () => {
             paintDOM.paintFriendly(p1Board, p1PlayArea);
         });
     };
-    setRandomizeButton();
-
-    const setResetButton = () => {
-        const resetButton = document.querySelector('.reset-placement');
-        resetButton.addEventListener('click', () => {
+    
+    const setResetPlacementButton = () => {
+        resetPlacementButton.addEventListener('click', () => {
             p1Board.ships.length = 0;
             p1PlayArea = p1Board.playArea();
             paintDOM.paintFriendly(p1Board, p1PlayArea);
         });
     }
-    setResetButton();
     
-    const setResetGameEvent = () => {
-        const resetGameButton = document.querySelector('.reset-game');
+    const setConfirmPlacementButton = () => {
+        confirmButton.addEventListener('click', () => {
+            if (p1Board.ships.length === 5) {
+                randomizeButton.style.display = 'none'
+                resetPlacementButton.style.display = 'none'
+                confirmButton.style.display = 'none'
+                enemyFrame.style.display = 'flex';
+                vsCPU();
+            }
+        });
+    };
+    
+    const setResetGameButton = () => {
         resetGameButton.addEventListener('click', () => {
             gameOverScreen.style.display = 'none';
             p1Board = gameboard();
@@ -46,22 +62,12 @@ const gameloop = () => {
             cpuBoard = gameboard();
             cpuPlayArea = cpuBoard.playArea();
             paintDOM.paintFriendly(p1Board, p1PlayArea);
-            paintDOM.paintEnemy(cpuBoard, cpuPlayArea);
-            vsCPU();
+            centerFriendly();
+            randomizeButton.style.display = 'inline'
+            resetPlacementButton.style.display = 'inline'
+            confirmButton.style.display = 'inline'
         });
     };
-    setResetGameEvent();
-
-    const setConfirmPlacementEvent = () => {
-        const confirmButton = document.querySelector('.confirm-placement')
-        confirmButton.addEventListener('click', () => {
-            console.log(p1Board.ships.length)
-            if (p1Board.ships.length === 5) {
-                alert('ships length is 5')
-            }
-        });
-    };
-    setConfirmPlacementEvent();
 
     const checkForP1Win = () => {
         if (cpuBoard.allSunk()) {
@@ -82,7 +88,6 @@ const gameloop = () => {
 
     async function vsCPU() {
         cpuBoard.placeShipsAtRandom(cpuPlayArea, cpuBoard);
-        p1Board.placeShipsAtRandom(p1PlayArea, p1Board);
 
         // used for testing
         // cpuBoard.ships[0].hits = 5; 
@@ -143,10 +148,16 @@ const gameloop = () => {
             await new Promise(resolve => setTimeout(resolve, 30));
         };
     };
-   
-    return {
-        vsCPU,
-    };
+
+    const establishGame = (() => {
+        centerFriendly();
+        paintDOM.paintFriendly(p1Board, p1PlayArea);
+        paintDOM.highlightFriendly();
+        setRandomizeButton();
+        setResetPlacementButton();
+        setConfirmPlacementButton();
+        setResetGameButton();
+    })();
 };
 
 module.exports = gameloop;
