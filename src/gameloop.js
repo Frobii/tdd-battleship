@@ -21,6 +21,47 @@ const gameloop = () => {
     const resetGameButton = document.querySelector('.reset-game');
     const enemyFrame = document.querySelector('.enemy-frame');
 
+    let orientation = 'h'
+
+    const orientationEvent = (() => {
+        changeOrientation = (event) => {
+            if (event.key.toUpperCase() === 'R') {
+                if (orientation === 'h') {
+                    orientation = 'v'
+                } else {
+                    orientation = 'h'
+                }
+            }
+        }
+        document.addEventListener('keydown', changeOrientation)
+    })();
+
+    const shipPlacementEvent = (() => {
+        let friendlyCells = document.querySelectorAll('.friendly-cell')
+        friendlyCells.forEach((cell) => {
+            cell.addEventListener('click', placeShips())
+        })
+        const placeShips = () => {
+            switch (p1Board.ships.length) {
+                case 1:
+                    
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+
+                    break;
+                case 5:
+
+                    break;
+            }
+        }
+    });
+
     const centerFriendly = () => {
         enemyFrame.style.display = 'none';
     }
