@@ -36,31 +36,49 @@ const gameloop = () => {
         document.addEventListener('keydown', changeOrientation)
     })();
 
-    const shipPlacementEvent = (() => {
+    const shipPlacementEvent = () => {
         let friendlyCells = document.querySelectorAll('.friendly-cell')
-        friendlyCells.forEach((cell) => {
-            cell.addEventListener('click', placeShips())
-        })
-        const placeShips = () => {
+        let cellNumber = 0;
+        
+        function getCoordinates(cellNumber) {
+            let gridColumns = 10;
+            let row = Math.ceil(cellNumber / gridColumns);
+        
+            let column = cellNumber % gridColumns;
+            if (column === 0) {
+                column = gridColumns;  // If column is 0, set it to the last column
+            }
+        
+            return [row, column];
+        }
+        const placeShips = (coordinates) => {
+            console.log(coordinates)
             switch (p1Board.ships.length) {
                 case 1:
-                    
+                    console.log(p1Board.ships.length)
                     break;
                 case 2:
-
+                    console.log(p1Board.ships.length)
                     break;
                 case 3:
-
+                    console.log(p1Board.ships.length)
                     break;
                 case 4:
-
+                    console.log(p1Board.ships.length)
                     break;
                 case 5:
-
+                    console.log(p1Board.ships.length)
                     break;
             }
         }
-    });
+        friendlyCells.forEach((cell) => {
+            cellNumber += 1
+            let coordinates = getCoordinates(cellNumber);
+            cell.addEventListener('click', () => {
+                placeShips(coordinates)
+            });
+        });
+    };
 
     const centerFriendly = () => {
         enemyFrame.style.display = 'none';
@@ -194,6 +212,7 @@ const gameloop = () => {
         centerFriendly();
         paintDOM.paintFriendly(p1Board, p1PlayArea);
         paintDOM.highlightFriendly();
+        shipPlacementEvent();
         setRandomizeButton();
         setResetPlacementButton();
         setConfirmPlacementButton();
