@@ -1,6 +1,7 @@
 const gameboard = require('../src/gameboard.js');
 const player = require('../src/player.js');
 const paintBoard = require('../src/paintBoard.js');
+const ship = require('../src/ship.js')
 
 const gameloop = () => {
     const p1 = player();
@@ -37,47 +38,56 @@ const gameloop = () => {
     })();
 
     const shipPlacementEvent = () => {
-        let friendlyCells = document.querySelectorAll('.friendly-cell')
-        let cellNumber = 0;
+        const gridFrame = document.querySelector('.friendly-grid');
         
-        function getCoordinates(cellNumber) {
-            let gridColumns = 10;
-            let row = Math.ceil(cellNumber / gridColumns);
-        
-            let column = cellNumber % gridColumns;
-            if (column === 0) {
-                column = gridColumns;  // If column is 0, set it to the last column
-            }
-        
-            return [row, column];
-        }
         const placeShips = (coordinates) => {
             console.log(coordinates)
             switch (p1Board.ships.length) {
+                case 0:
+                    let carrier = ship(5, 'carrier');
+                    p1Board.placeShip(carrier, p1PlayArea, coordinates, orientation);
+                    paintDOM.paintFriendly(p1Board, p1PlayArea);
+                    console.log(p1Board.ships.length)
+                    break;
                 case 1:
+                    let battleship = ship(4, 'battleship');
+                    p1Board.placeShip(battleship, p1PlayArea, coordinates, orientation);
+                    paintDOM.paintFriendly(p1Board, p1PlayArea);
                     console.log(p1Board.ships.length)
                     break;
                 case 2:
+                    let destroyer = ship(3,'destroyer');
+                    p1Board.placeShip(destroyer, p1PlayArea, coordinates, orientation);
+                    paintDOM.paintFriendly(p1Board, p1PlayArea);
                     console.log(p1Board.ships.length)
                     break;
                 case 3:
+                    let submarine = ship(3, 'submarine');
+                    p1Board.placeShip(submarine, p1PlayArea, coordinates, orientation);
+                    paintDOM.paintFriendly(p1Board, p1PlayArea);
                     console.log(p1Board.ships.length)
                     break;
                 case 4:
-                    console.log(p1Board.ships.length)
-                    break;
-                case 5:
+                    let patrolBoat = ship(2, 'patrol-boat');
+                    p1Board.placeShip(patrolBoat, p1PlayArea, coordinates, orientation);
+                    paintDOM.paintFriendly(p1Board, p1PlayArea);
                     console.log(p1Board.ships.length)
                     break;
             }
         }
-        friendlyCells.forEach((cell) => {
-            cellNumber += 1
-            let coordinates = getCoordinates(cellNumber);
-            cell.addEventListener('click', () => {
+        function getCoordinates(cell) {
+            let friendlyCells = document.querySelectorAll('.friendly-cell')
+            let cellNumber = Array.from(friendlyCells).indexOf(cell);
+            let y = cellNumber % 10;
+            let x = Math.floor(cellNumber / 10);
+            return [x,y];
+        }
+        gridFrame.addEventListener('click', (event) => {
+            if (event.target.classList.contains('friendly-cell')) {
+                let coordinates = getCoordinates(event.target);
                 placeShips(coordinates)
-            });
-        });
+            }
+        })
     };
 
     const centerFriendly = () => {
