@@ -39,39 +39,97 @@ const gameloop = () => {
 
     const shipPlacementEvent = () => {
         const gridFrame = document.querySelector('.friendly-grid');
-        
+
+        const hoverPreview = (coordinates) => {
+            // PROBLEMS:    can't hover over the edge without crashing
+            //              orientation change doesn't remove the class
+            let friendlyCells = document.querySelectorAll('.friendly-cell')
+            friendlyCells.forEach((cell, index) => {
+                cell.addEventListener('mouseover', () => {
+                    let addNum = 0
+                    if (orientation === 'v') {
+                        addNum = 1;
+                    } else if (orientation === 'h') {
+                        addNum = 10;
+                    }
+                    console.log(index)
+                    switch (p1Board.ships.length) {
+                        case 0:
+                            cell.classList.add('hover-placement')
+                            friendlyCells[index + addNum].classList.add('hover-placement')
+                            friendlyCells[index + (addNum * 2)].classList.add('hover-placement')
+                            friendlyCells[index + (addNum * 3)].classList.add('hover-placement')
+                            friendlyCells[index + (addNum * 4)].classList.add('hover-placement')
+                            break;
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                    };
+                });
+                cell.addEventListener('mouseout', () => {
+                    let addNum = 0
+                    if (orientation === 'v') {
+                        addNum = 1;
+                    } else if (orientation === 'h') {
+                        addNum = 10;
+                    }
+                    switch (p1Board.ships.length) {
+                        case 0:
+                            cell.classList.remove('hover-placement')
+                            friendlyCells[index + addNum].classList.remove('hover-placement')
+                            friendlyCells[index + (addNum * 2)].classList.remove('hover-placement')
+                            friendlyCells[index + (addNum * 3)].classList.remove('hover-placement')
+                            friendlyCells[index + (addNum * 4)].classList.remove('hover-placement')
+                            break;
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                    };
+                });
+            }) ;
+        };
+        hoverPreview();
         const placeShips = (coordinates) => {
-            console.log(coordinates)
             switch (p1Board.ships.length) {
                 case 0:
                     let carrier = ship(5, 'carrier');
                     p1Board.placeShip(carrier, p1PlayArea, coordinates, orientation);
                     paintDOM.paintFriendly(p1Board, p1PlayArea);
-                    console.log(p1Board.ships.length)
+                    hoverPreview();
                     break;
                 case 1:
                     let battleship = ship(4, 'battleship');
                     p1Board.placeShip(battleship, p1PlayArea, coordinates, orientation);
                     paintDOM.paintFriendly(p1Board, p1PlayArea);
-                    console.log(p1Board.ships.length)
+                    hoverPreview();
                     break;
                 case 2:
                     let destroyer = ship(3,'destroyer');
                     p1Board.placeShip(destroyer, p1PlayArea, coordinates, orientation);
                     paintDOM.paintFriendly(p1Board, p1PlayArea);
-                    console.log(p1Board.ships.length)
+                    hoverPreview();
                     break;
                 case 3:
                     let submarine = ship(3, 'submarine');
                     p1Board.placeShip(submarine, p1PlayArea, coordinates, orientation);
                     paintDOM.paintFriendly(p1Board, p1PlayArea);
-                    console.log(p1Board.ships.length)
+                    hoverPreview();
                     break;
                 case 4:
                     let patrolBoat = ship(2, 'patrol-boat');
                     p1Board.placeShip(patrolBoat, p1PlayArea, coordinates, orientation);
                     paintDOM.paintFriendly(p1Board, p1PlayArea);
-                    console.log(p1Board.ships.length)
+                    hoverPreview();
                     break;
             }
         }
@@ -164,7 +222,6 @@ const gameloop = () => {
         // cpuBoard.ships[2].hits = 3; 
         // cpuBoard.ships[3].hits = 3; 
 
-        // used for testing
         // p1Board.ships[0].hits = 5; 
         // p1Board.ships[1].hits = 4; 
         // p1Board.ships[2].hits = 3; 

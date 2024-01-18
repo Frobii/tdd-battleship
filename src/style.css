@@ -139,6 +139,10 @@ a:hover {
     background-color: red;
 }
 
+.hover-placement {
+    background-color: rgba(0, 255, 0, 0.623);
+}
+
 .game-over-screen {
     position: absolute;
     display: none;
