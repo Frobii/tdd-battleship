@@ -24,6 +24,13 @@ const gameloop = () => {
 
     let orientation = 'h'
 
+    const clearHighlight = () => {
+        let friendlyCells = document.querySelectorAll('.friendly-cell')
+        friendlyCells.forEach((cell) => {
+            cell.classList.remove('hover-placement')
+        })
+    }
+    
     const orientationEvent = (() => {
         changeOrientation = (event) => {
             if (event.key.toUpperCase() === 'R') {
@@ -32,72 +39,108 @@ const gameloop = () => {
                 } else {
                     orientation = 'h'
                 }
+                clearHighlight();
+                paintDOM.paintFriendly(p1Board, p1PlayArea);
+                hoverPreview();
             }
         }
         document.addEventListener('keydown', changeOrientation)
     })();
 
+    const hoverPreview = (coordinates) => {
+        let friendlyCells = document.querySelectorAll('.friendly-cell')
+        friendlyCells.forEach((cell, index) => {
+            cell.addEventListener('mouseover', () => {
+                // these orientations are incorrect but it works
+                // refactor orientation's module
+                let addNum = 0
+                if (orientation === 'v') { 
+                    addNum = 1;
+                } else if (orientation === 'h') {
+                    addNum = 10;
+                }
+                console.log(index)
+                switch (p1Board.ships.length) {
+                    case 0:
+                        if (orientation === 'h' && index > 59) {break}
+                        if (orientation === 'v' && (index % 10) > 5) {break}
+                        cell.classList.add('hover-placement')
+                        friendlyCells[index + addNum].classList.add('hover-placement')
+                        friendlyCells[index + (addNum * 2)].classList.add('hover-placement')
+                        friendlyCells[index + (addNum * 3)].classList.add('hover-placement')
+                        friendlyCells[index + (addNum * 4)].classList.add('hover-placement')
+                        break;
+                    case 1:
+                        if (orientation === 'h' && index > 69) {break}
+                        if (orientation === 'v' && (index % 10) > 6) {break}
+                        cell.classList.add('hover-placement')
+                        friendlyCells[index + addNum].classList.add('hover-placement')
+                        friendlyCells[index + (addNum * 2)].classList.add('hover-placement')
+                        friendlyCells[index + (addNum * 3)].classList.add('hover-placement')
+                        break;
+                    case 2:
+                    case 3:
+                        if (orientation === 'h' && index > 79) {break}
+                        if (orientation === 'v' && (index % 10) > 7) {break}
+                        cell.classList.add('hover-placement')
+                        friendlyCells[index + addNum].classList.add('hover-placement')
+                        friendlyCells[index + (addNum * 2)].classList.add('hover-placement')
+                        break;
+                    case 4:
+                        if (orientation === 'h' && index > 89) {break}
+                        if (orientation === 'v' && (index % 10) > 8) {break}
+                        cell.classList.add('hover-placement')
+                        friendlyCells[index + addNum].classList.add('hover-placement')
+                        break;
+                };
+            });
+            cell.addEventListener('mouseout', () => {
+                let addNum = 0
+                if (orientation === 'v') {
+                    addNum = 1;
+                } else if (orientation === 'h') {
+                    addNum = 10;
+                }
+                switch (p1Board.ships.length) {
+                    case 0:
+                        if (orientation === 'h' && index > 59) {break}
+                        if (orientation === 'v' && (index % 10) > 5) {break}
+                        cell.classList.remove('hover-placement')
+                        friendlyCells[index + addNum].classList.remove('hover-placement')
+                        friendlyCells[index + (addNum * 2)].classList.remove('hover-placement')
+                        friendlyCells[index + (addNum * 3)].classList.remove('hover-placement')
+                        friendlyCells[index + (addNum * 4)].classList.remove('hover-placement')
+                        break;
+                    case 1:
+                        if (orientation === 'h' && index > 69) {break}
+                        if (orientation === 'v' && (index % 10) > 6) {break}
+                        cell.classList.remove('hover-placement')
+                        friendlyCells[index + addNum].classList.remove('hover-placement')
+                        friendlyCells[index + (addNum * 2)].classList.remove('hover-placement')
+                        friendlyCells[index + (addNum * 3)].classList.remove('hover-placement')
+                        break;
+                    case 2:
+                    case 3:
+                        if (orientation === 'h' && index > 79) {break}
+                        if (orientation === 'v' && (index % 10) > 7) {break}
+                        cell.classList.remove('hover-placement')
+                        friendlyCells[index + addNum].classList.remove('hover-placement')
+                        friendlyCells[index + (addNum * 2)].classList.remove('hover-placement')
+                        break;
+                    case 4:
+                        if (orientation === 'h' && index > 89) {break}
+                        if (orientation === 'v' && (index % 10) > 8) {break}
+                        cell.classList.remove('hover-placement')
+                        friendlyCells[index + addNum].classList.remove('hover-placement')
+                        break;
+                };
+            });
+        }) ;
+    };
+
     const shipPlacementEvent = () => {
         const gridFrame = document.querySelector('.friendly-grid');
 
-        const hoverPreview = (coordinates) => {
-            // PROBLEMS:    can't hover over the edge without crashing
-            //              orientation change doesn't remove the class
-            let friendlyCells = document.querySelectorAll('.friendly-cell')
-            friendlyCells.forEach((cell, index) => {
-                cell.addEventListener('mouseover', () => {
-                    let addNum = 0
-                    if (orientation === 'v') {
-                        addNum = 1;
-                    } else if (orientation === 'h') {
-                        addNum = 10;
-                    }
-                    console.log(index)
-                    switch (p1Board.ships.length) {
-                        case 0:
-                            cell.classList.add('hover-placement')
-                            friendlyCells[index + addNum].classList.add('hover-placement')
-                            friendlyCells[index + (addNum * 2)].classList.add('hover-placement')
-                            friendlyCells[index + (addNum * 3)].classList.add('hover-placement')
-                            friendlyCells[index + (addNum * 4)].classList.add('hover-placement')
-                            break;
-                        case 1:
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            break;
-                        case 4:
-                            break;
-                    };
-                });
-                cell.addEventListener('mouseout', () => {
-                    let addNum = 0
-                    if (orientation === 'v') {
-                        addNum = 1;
-                    } else if (orientation === 'h') {
-                        addNum = 10;
-                    }
-                    switch (p1Board.ships.length) {
-                        case 0:
-                            cell.classList.remove('hover-placement')
-                            friendlyCells[index + addNum].classList.remove('hover-placement')
-                            friendlyCells[index + (addNum * 2)].classList.remove('hover-placement')
-                            friendlyCells[index + (addNum * 3)].classList.remove('hover-placement')
-                            friendlyCells[index + (addNum * 4)].classList.remove('hover-placement')
-                            break;
-                        case 1:
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            break;
-                        case 4:
-                            break;
-                    };
-                });
-            }) ;
-        };
         hoverPreview();
         const placeShips = (coordinates) => {
             switch (p1Board.ships.length) {
@@ -166,6 +209,7 @@ const gameloop = () => {
             p1Board.ships.length = 0;
             p1PlayArea = p1Board.playArea();
             paintDOM.paintFriendly(p1Board, p1PlayArea);
+            hoverPreview();
         });
     }
     
