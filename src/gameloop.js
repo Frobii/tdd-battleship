@@ -59,7 +59,6 @@ const gameloop = () => {
                 } else if (orientation === 'h') {
                     addNum = 10;
                 }
-                console.log(index)
                 switch (p1Board.ships.length) {
                     case 0:
                         if (orientation === 'h' && index > 59) {break}
