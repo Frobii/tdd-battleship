@@ -22,6 +22,12 @@ const gameloop = () => {
     const resetGameButton = document.querySelector('.reset-game');
     const enemyFrame = document.querySelector('.enemy-frame');
 
+    const carrierIcon = document.querySelector('.friendly-carrier');
+    const battleshipIcon = document.querySelector('.friendly-battleship');
+    const destroyerIcon = document.querySelector('.friendly-destroyer');
+    const submarineIcon = document.querySelector('.friendly-submarine');
+    const patrolIcon = document.querySelector('.friendly-patrol');
+
     let orientation = 'h'
 
     const clearHighlight = () => {
@@ -46,7 +52,7 @@ const gameloop = () => {
         }
         document.addEventListener('keydown', changeOrientation)
     })();
-
+ 
     const hoverPreview = (coordinates) => {
         let friendlyCells = document.querySelectorAll('.friendly-cell')
         friendlyCells.forEach((cell, index) => {
@@ -61,6 +67,7 @@ const gameloop = () => {
                 }
                 switch (p1Board.ships.length) {
                     case 0:
+                        carrierIcon.classList.add('flashing-icon')
                         if (orientation === 'h' && index > 59) {break}
                         if (orientation === 'v' && (index % 10) > 5) {break}
                         cell.classList.add('hover-placement')
@@ -70,6 +77,8 @@ const gameloop = () => {
                         friendlyCells[index + (addNum * 4)].classList.add('hover-placement')
                         break;
                     case 1:
+                        carrierIcon.classList.remove('flashing-icon')
+                        battleshipIcon.classList.add('flashing-icon')
                         if (orientation === 'h' && index > 69) {break}
                         if (orientation === 'v' && (index % 10) > 6) {break}
                         cell.classList.add('hover-placement')
@@ -78,7 +87,17 @@ const gameloop = () => {
                         friendlyCells[index + (addNum * 3)].classList.add('hover-placement')
                         break;
                     case 2:
+                        battleshipIcon.classList.remove('flashing-icon')
+                        destroyerIcon.classList.add('flashing-icon')
+                        if (orientation === 'h' && index > 79) {break}
+                        if (orientation === 'v' && (index % 10) > 7) {break}
+                        cell.classList.add('hover-placement')
+                        friendlyCells[index + addNum].classList.add('hover-placement')
+                        friendlyCells[index + (addNum * 2)].classList.add('hover-placement')
+                        break;
                     case 3:
+                        destroyerIcon.classList.remove('flashing-icon')
+                        submarineIcon.classList.add('flashing-icon')
                         if (orientation === 'h' && index > 79) {break}
                         if (orientation === 'v' && (index % 10) > 7) {break}
                         cell.classList.add('hover-placement')
@@ -86,11 +105,17 @@ const gameloop = () => {
                         friendlyCells[index + (addNum * 2)].classList.add('hover-placement')
                         break;
                     case 4:
+                        submarineIcon.classList.remove('flashing-icon')
+                        patrolIcon.classList.add('flashing-icon')
                         if (orientation === 'h' && index > 89) {break}
                         if (orientation === 'v' && (index % 10) > 8) {break}
                         cell.classList.add('hover-placement')
                         friendlyCells[index + addNum].classList.add('hover-placement')
                         break;
+                    case 5:
+                        patrolIcon.classList.remove('flashing-icon');
+                        break;
+
                 };
             });
             cell.addEventListener('mouseout', () => {

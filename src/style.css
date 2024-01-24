@@ -121,9 +121,26 @@ a:hover {
 .ship-status {
     display: flex;
     flex-direction: row;
+    position: relative;
     width: 20%;
     height: 80%;
 }
+
+    .flashing-icon {
+        animation: flashing 1s infinite;
+    }
+    
+    @keyframes flashing {
+        0% {
+          filter: opacity(0%);
+        }
+        50% {
+          filter: opacity(50%);
+        }
+        100% {
+          filter: opacity(100%);
+        }
+    }
 
 .carrier-status {
     background-image: url(./images/aircraft-carrier.png);
