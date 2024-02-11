@@ -28,6 +28,12 @@ const gameloop = () => {
     const submarineIcon = document.querySelector('.friendly-submarine');
     const patrolIcon = document.querySelector('.friendly-patrol');
 
+    const enemyCarrierIcon = document.querySelector('.enemy-carrier')
+    const enemyBattleshipIcon = document.querySelector('.enemy-battleship');
+    const enemyDestroyerIcon = document.querySelector('.enemy-destroyer');
+    const enemySubmarineIcon = document.querySelector('.enemy-submarine');
+    const enemyPatrolIcon = document.querySelector('.enemy-patrol');
+
     let orientation = 'h'
 
     const clearHighlight = () => {
@@ -225,6 +231,11 @@ const gameloop = () => {
             p1PlayArea = p1Board.playArea();
             p1Board.placeShipsAtRandom(p1PlayArea, p1Board);
             paintDOM.paintFriendly(p1Board, p1PlayArea);
+            carrierIcon.classList.remove('flashing-icon')
+            battleshipIcon.classList.remove('flashing-icon')
+            destroyerIcon.classList.remove('flashing-icon')
+            submarineIcon.classList.remove('flashing-icon')
+            patrolIcon.classList.remove('flashing-icon')
         });
     };
     
@@ -233,6 +244,11 @@ const gameloop = () => {
             p1Board.ships.length = 0;
             p1PlayArea = p1Board.playArea();
             paintDOM.paintFriendly(p1Board, p1PlayArea);
+            carrierIcon.classList.remove('flashing-icon')
+            battleshipIcon.classList.remove('flashing-icon')
+            destroyerIcon.classList.remove('flashing-icon')
+            submarineIcon.classList.remove('flashing-icon')
+            patrolIcon.classList.remove('flashing-icon')
             hoverPreview();
         });
     }
@@ -263,6 +279,47 @@ const gameloop = () => {
             confirmButton.style.display = 'inline'
         });
     };
+
+    const checkShipsDown = (board, player) => {
+        board.ships.forEach((ship) => {
+            console.log(ship.hits, ship.name)
+            if (ship.hits === 5 && ship.name === 'carrier') {
+                if (player === 'enemy') {
+                    enemyCarrierIcon.classList.add('red-filter');
+                } else if (player === 'friendly') {
+                    carrierIcon.classList.add('red-filter');
+                }
+            } 
+            if (ship.hits === 4 && ship.name === 'battleship') {
+                if (player === 'enemy') {
+                    enemyBattleshipIcon.classList.add('red-filter');
+                } else if (player === 'friendly') {
+                    battleshipIcon.classList.add('red-filter');
+                }
+            }
+            if (ship.hits === 3 && ship.name === 'destroyer') {
+                if (player === 'enemy') {
+                    enemyDestroyerIcon.classList.add('red-filter');
+                } else if (player === 'friendly') {
+                    destroyerIcon.classList.add('red-filter');
+                }
+            }
+            if (ship.hits === 3 && ship.name === 'submarine') {
+                if (player === 'enemy') {
+                    enemySubmarineIcon.classList.add('red-filter');
+                } else if (player === 'friendly') {
+                    submarineIcon.classList.add('red-filter');
+                }
+            }
+            if (ship.hits === 2 && ship.name === 'patrol-boat') {
+                if (player === 'enemy') {
+                    enemyPatrolIcon.classList.add('red-filter');
+                } else if (player === 'friendly') {
+                    patrolIcon.classList.add('red-filter');
+                }
+            }
+        })
+    }
 
     const checkForP1Win = () => {
         if (cpuBoard.allSunk()) {
@@ -311,6 +368,8 @@ const gameloop = () => {
                 // used for testing
                 // cpuBoard.ships[4].hits = 2; 
 
+                checkShipsDown(cpuBoard, 'enemy');
+                paintDOM.paintEnemy(cpuBoard, cpuPlayArea);
                 if (checkForP1Win() === 'win') {
                     return
                 }; // Check if the player made a winning move
@@ -328,11 +387,12 @@ const gameloop = () => {
                 await new Promise(resolve => setTimeout(resolve, 900)); // Delay the CPU's turn
                 currentP1HitsLength = p1Board.hits.length
                 cpu.cpuTurn(p1PlayArea, p1Board);
+                checkShipsDown(p1Board, 'friendly');
                 paintDOM.paintFriendly(p1Board, p1PlayArea);
-
+                
                 // used for testing
                 // p1Board.ships[4].hits = 2; 
-
+                
                 checkForCPUWin(); // Check if the CPU made a winning move
             } while (p1Board.hits.length > currentP1HitsLength)
 
