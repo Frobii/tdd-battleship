@@ -1,7 +1,8 @@
 const gameboard = require('../src/gameboard.js');
 const player = require('../src/player.js');
 const paintBoard = require('../src/paintBoard.js');
-const ship = require('../src/ship.js')
+const ship = require('../src/ship.js');
+const { ContextExclusionPlugin } = require('webpack');
 
 const gameloop = () => {
     const p1 = player();
@@ -225,6 +226,11 @@ const gameloop = () => {
             p1PlayArea = p1Board.playArea();
             p1Board.placeShipsAtRandom(p1PlayArea, p1Board);
             paintDOM.paintFriendly(p1Board, p1PlayArea);
+            carrierIcon.classList.remove('flashing-icon')
+            battleshipIcon.classList.remove('flashing-icon')
+            destroyerIcon.classList.remove('flashing-icon')
+            submarineIcon.classList.remove('flashing-icon')
+            patrolIcon.classList.remove('flashing-icon')
         });
     };
     
@@ -233,6 +239,11 @@ const gameloop = () => {
             p1Board.ships.length = 0;
             p1PlayArea = p1Board.playArea();
             paintDOM.paintFriendly(p1Board, p1PlayArea);
+            carrierIcon.classList.remove('flashing-icon')
+            battleshipIcon.classList.remove('flashing-icon')
+            destroyerIcon.classList.remove('flashing-icon')
+            submarineIcon.classList.remove('flashing-icon')
+            patrolIcon.classList.remove('flashing-icon')
             hoverPreview();
         });
     }
@@ -262,6 +273,40 @@ const gameloop = () => {
             resetPlacementButton.style.display = 'inline'
             confirmButton.style.display = 'inline'
         });
+    };
+
+    const checkForShipDownCPU = () => {
+        cpuBoard.ships.forEach((ship) => {
+            // console.log(ship.hits.length)
+            // console.log(ship.name)
+            if (ship.hits.length === 5 && ship.name === 'carrier') {
+                carrierIcon.classList.add('red-filter')
+            } else if (ship.hits.length === 4 && ship.name === 'battleship') {
+                battleshipIcon.classList.add('red-filter')
+            } else if (ship.hits.length === 3 && ship.name === 'destroyer') {
+                destroyerIcon.classList.add('red-filter')
+            } else if (ship.hits.length === 3 && ship.name === 'submarine') {
+                submarineIcon.classList.add('red-filter') 
+            } else if (ship.hits.length === 2 && ship.name === 'patrol-boat') {
+                patrolIcon.classList.add('red-filter')
+            }
+        })
+    };
+
+    const checkForShipDownPlayer = () => {
+        p1Board.ships.forEach((ship) => {
+            if (ship.hits.length === 5 && ship.name === 'carrier') {
+                carrierIcon.classList.add('red-filter')
+            } else if (ship.hits.length === 4 && ship.name === 'battleship') {
+                battleshipIcon.classList.add('red-filter')
+            } else if (ship.hits.length === 3 && ship.name === 'destroyer') {
+                destroyerIcon.classList.add('red-filter')
+            } else if (ship.hits.length === 3 && ship.name === 'submarine') {
+                submarineIcon.classList.add('red-filter') 
+            } else if (ship.hits.length === 2 && ship.name === 'patrol-boat') {
+                patrolIcon.classList.add('red-filter')
+            }
+        })
     };
 
     const checkForP1Win = () => {
@@ -310,7 +355,7 @@ const gameloop = () => {
 
                 // used for testing
                 // cpuBoard.ships[4].hits = 2; 
-
+                checkForShipDownCPU();
                 if (checkForP1Win() === 'win') {
                     return
                 }; // Check if the player made a winning move
@@ -332,7 +377,7 @@ const gameloop = () => {
 
                 // used for testing
                 // p1Board.ships[4].hits = 2; 
-
+                checkForShipDownPlayer();
                 checkForCPUWin(); // Check if the CPU made a winning move
             } while (p1Board.hits.length > currentP1HitsLength)
 
