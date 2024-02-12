@@ -272,6 +272,16 @@ const gameloop = () => {
             p1PlayArea = p1Board.playArea();
             cpuBoard = gameboard();
             cpuPlayArea = cpuBoard.playArea();
+            destroyerIcon.classList.remove('red-filter');
+            battleshipIcon.classList.remove('red-filter');
+            carrierIcon.classList.remove('red-filter');
+            patrolIcon.classList.remove('red-filter');
+            submarineIcon.classList.remove('red-filter');
+            enemyDestroyerIcon.classList.remove('red-filter');
+            enemyBattleshipIcon.classList.remove('red-filter');
+            enemyCarrierIcon.classList.remove('red-filter');
+            enemyPatrolIcon.classList.remove('red-filter');
+            enemySubmarineIcon.classList.remove('red-filter');
             paintDOM.paintFriendly(p1Board, p1PlayArea);
             centerFriendly();
             randomizeButton.style.display = 'inline'
