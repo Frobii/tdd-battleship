@@ -413,7 +413,7 @@ const gameloop = () => {
         };
     };
 
-    const establishGame = (() => {
+    const establishGameVsCPU = () => {
         centerFriendly();
         paintDOM.paintFriendly(p1Board, p1PlayArea);
         paintDOM.highlightFriendly();
@@ -422,7 +422,11 @@ const gameloop = () => {
         setResetPlacementButton();
         setConfirmPlacementButton();
         setResetGameButton();
-    })();
+    };
+
+    return {
+        establishGameVsCPU,
+    }
 };
 
 module.exports = gameloop;
