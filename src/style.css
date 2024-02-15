@@ -130,7 +130,6 @@ a:hover {
     filter: brightness(0) saturate(100%) invert(11%) sepia(99%) saturate(6723%) hue-rotate(354deg) brightness(105%) contrast(108%);
 }
 
-
     .flashing-icon {
         animation: flashing 1s infinite;
     }
