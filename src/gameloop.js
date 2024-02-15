@@ -1,7 +1,8 @@
 const gameboard = require('../src/gameboard.js');
 const player = require('../src/player.js');
 const paintBoard = require('../src/paintBoard.js');
-const ship = require('../src/ship.js')
+const ship = require('../src/ship.js');
+const { ContextExclusionPlugin } = require('webpack');
 
 const gameloop = () => {
     const p1 = player();
@@ -280,6 +281,7 @@ const gameloop = () => {
         });
     };
 
+
     const checkShipsDown = (board, player) => {
         board.ships.forEach((ship) => {
             console.log(ship.hits, ship.name)
@@ -320,6 +322,8 @@ const gameloop = () => {
             }
         })
     }
+
+
 
     const checkForP1Win = () => {
         if (cpuBoard.allSunk()) {
@@ -368,8 +372,10 @@ const gameloop = () => {
                 // used for testing
                 // cpuBoard.ships[4].hits = 2; 
 
+
                 checkShipsDown(cpuBoard, 'enemy');
                 paintDOM.paintEnemy(cpuBoard, cpuPlayArea);
+
                 if (checkForP1Win() === 'win') {
                     return
                 }; // Check if the player made a winning move
@@ -392,7 +398,9 @@ const gameloop = () => {
                 
                 // used for testing
                 // p1Board.ships[4].hits = 2; 
+
                 
+
                 checkForCPUWin(); // Check if the CPU made a winning move
             } while (p1Board.hits.length > currentP1HitsLength)
 
