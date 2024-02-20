@@ -292,7 +292,7 @@ const gameloop = () => {
 
     const checkShipsDown = (board, player) => {
         board.ships.forEach((ship) => {
-            console.log(ship.hits, ship.name)
+            // console.log(ship.hits, ship.name)
             if (ship.hits === 5 && ship.name === 'carrier') {
                 if (player === 'enemy') {
                     enemyCarrierIcon.classList.add('red-filter');
