@@ -34,7 +34,7 @@ const player = () => {
             minusY = previousY - 1;
         }
         while ((gameBoard.hits.some(containsCoords) || gameBoard.misses.some(containsCoords)) || coordinates.length === 0) {
-            // Attempt to hit a position next to a previous hit
+            // Target positions next to a previous hit
             if (hitsLength > 0) {
                 hitsLength = gameBoard.hits.length;
                 i++; // Keep track of how many times the while loop has performed an iteration for the current hit
@@ -56,14 +56,12 @@ const player = () => {
                     plusY = previousY + 1;
                     minusX = previousX - 1;
                     minusY = previousY - 1;
-                    console.log('triggering backwards traversal')
                 } else {
                     // Randomize the coordinates when no calculated shots can be made
                     x = getRandomInt(10);
                     y = getRandomInt(10);
                     coordinates = [x,y];        
                 }
-                console.log(coordinates)
             } else {
                 // Re-randomize duplicates when a hit hasn't been found
                 x = getRandomInt(10);
@@ -71,7 +69,6 @@ const player = () => {
                 coordinates = [x,y];
             }
         }
-        console.log('finalCoords', coordinates)
         gameBoard.receiveAttack(coordinates, playArea);
         return coordinates;
     };

@@ -4,11 +4,11 @@ const ship = (length, name = 'default-ship') => {
     const hit = () => {
         if (hits < length) {
             hits++;
-        }; // else sink the ship TEST FIRST !!! :)
+        };
     };
 
     const isSunk = () => {
-        return hits == length; // returns a boolean
+        return hits == length;
     };
 
     return {
