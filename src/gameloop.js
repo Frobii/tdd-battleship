@@ -2,7 +2,6 @@ const gameboard = require('../src/gameboard.js');
 const player = require('../src/player.js');
 const paintBoard = require('../src/paintBoard.js');
 const ship = require('../src/ship.js');
-const { ContextExclusionPlugin } = require('webpack');
 
 const gameloop = () => {
     const p1 = player();
@@ -355,17 +354,6 @@ const gameloop = () => {
     async function vsCPU() {
         cpuBoard.placeShipsAtRandom(cpuPlayArea, cpuBoard);
 
-        // used for testing
-        // cpuBoard.ships[0].hits = 5; 
-        // cpuBoard.ships[1].hits = 4; 
-        // cpuBoard.ships[2].hits = 3; 
-        // cpuBoard.ships[3].hits = 3; 
-
-        // p1Board.ships[0].hits = 5; 
-        // p1Board.ships[1].hits = 4; 
-        // p1Board.ships[2].hits = 3; 
-        // p1Board.ships[3].hits = 3; 
-
         paintDOM.paintFriendly(p1Board, p1PlayArea);
         let currentCPUHitsLength = cpuBoard.hits.length;
         let currentP1HitsLength = p1Board.hits.length;
@@ -378,10 +366,6 @@ const gameloop = () => {
             do { // Wait for the player's turn
                 currentCPUHitsLength = cpuBoard.hits.length
                 await p1.waitForPlayerTurn();
-
-                // used for testing
-                // cpuBoard.ships[4].hits = 2; 
-
 
                 checkShipsDown(cpuBoard, 'enemy');
                 paintDOM.paintEnemy(cpuBoard, cpuPlayArea);
@@ -403,14 +387,8 @@ const gameloop = () => {
                 await new Promise(resolve => setTimeout(resolve, 900)); // Delay the CPU's turn
                 currentP1HitsLength = p1Board.hits.length
                 cpu.cpuTurn(p1PlayArea, p1Board);
-                checkShipsDown(p1Board, 'friendly');
+                checkShipsDown(p1Board, 'friendly'); // Update the ships down graphics
                 paintDOM.paintFriendly(p1Board, p1PlayArea);
-                
-                // used for testing
-                // p1Board.ships[4].hits = 2; 
-
-                
-
                 checkForCPUWin(); // Check if the CPU made a winning move
             } while (p1Board.hits.length > currentP1HitsLength)
 
