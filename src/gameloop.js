@@ -20,19 +20,24 @@ const gameloop = () => {
     const resetPlacementButton = document.querySelector('.reset-placement');
     const confirmButton = document.querySelector('.confirm-placement');
     const resetGameButton = document.querySelector('.reset-game');
+    const bothFrames = document.querySelectorAll('.frame');
     const enemyFrame = document.querySelector('.enemy-frame');
+    const controlsDialogue = document.querySelector('.controls-dialogue');
+    const placementOptions = document.querySelector('.placement-options-container');
 
     const carrierIcon = document.querySelector('.friendly-carrier');
     const battleshipIcon = document.querySelector('.friendly-battleship');
     const destroyerIcon = document.querySelector('.friendly-destroyer');
     const submarineIcon = document.querySelector('.friendly-submarine');
     const patrolIcon = document.querySelector('.friendly-patrol');
+    const friendlyIcons = [carrierIcon, battleshipIcon, destroyerIcon, submarineIcon, patrolIcon];
 
     const enemyCarrierIcon = document.querySelector('.enemy-carrier')
     const enemyBattleshipIcon = document.querySelector('.enemy-battleship');
     const enemyDestroyerIcon = document.querySelector('.enemy-destroyer');
     const enemySubmarineIcon = document.querySelector('.enemy-submarine');
     const enemyPatrolIcon = document.querySelector('.enemy-patrol');
+    const enemyIcons = [enemyCarrierIcon, enemyBattleshipIcon, enemyDestroyerIcon, enemySubmarineIcon, enemyPatrolIcon];
 
     let orientation = 'h'
 
@@ -59,12 +64,12 @@ const gameloop = () => {
         document.addEventListener('keydown', changeOrientation)
     })();
  
-    const hoverPreview = (coordinates) => {
+    const hoverPreview = () => {
         let friendlyCells = document.querySelectorAll('.friendly-cell')
         friendlyCells.forEach((cell, index) => {
             cell.addEventListener('mouseover', () => {
                 // these orientations are incorrect but it works
-                // refactor orientation's module
+                // TO DO: Correct orientations throughout the project
                 let addNum = 0
                 if (orientation === 'v') { 
                     addNum = 1;
@@ -223,6 +228,7 @@ const gameloop = () => {
 
     const centerFriendly = () => {
         enemyFrame.style.display = 'none';
+        controlsDialogue.textContent = 'Press "R" to rotate your ship!';
     }
 
     const setRandomizeButton = () => {
@@ -231,11 +237,9 @@ const gameloop = () => {
             p1PlayArea = p1Board.playArea();
             p1Board.placeShipsAtRandom(p1PlayArea, p1Board);
             paintDOM.paintFriendly(p1Board, p1PlayArea);
-            carrierIcon.classList.remove('flashing-icon')
-            battleshipIcon.classList.remove('flashing-icon')
-            destroyerIcon.classList.remove('flashing-icon')
-            submarineIcon.classList.remove('flashing-icon')
-            patrolIcon.classList.remove('flashing-icon')
+            friendlyIcons.forEach((icon) => {
+                icon.classList.remove('flashing-icon')
+            })
         });
     };
     
@@ -244,11 +248,9 @@ const gameloop = () => {
             p1Board.ships.length = 0;
             p1PlayArea = p1Board.playArea();
             paintDOM.paintFriendly(p1Board, p1PlayArea);
-            carrierIcon.classList.remove('flashing-icon')
-            battleshipIcon.classList.remove('flashing-icon')
-            destroyerIcon.classList.remove('flashing-icon')
-            submarineIcon.classList.remove('flashing-icon')
-            patrolIcon.classList.remove('flashing-icon')
+            friendlyIcons.forEach((icon) => {
+                icon.classList.remove('flashing-icon')
+            })
             hoverPreview();
         });
     }
@@ -260,6 +262,12 @@ const gameloop = () => {
                 resetPlacementButton.style.display = 'none'
                 confirmButton.style.display = 'none'
                 enemyFrame.style.display = 'flex';
+                controlsDialogue.textContent = '';
+                controlsDialogue.style.height = '0px';
+                placementOptions.style.height = '0px';
+                bothFrames.forEach((frame) => {
+                    frame.style.height = '38rem';
+                })
                 vsCPU();
             }
         });
@@ -272,28 +280,29 @@ const gameloop = () => {
             p1PlayArea = p1Board.playArea();
             cpuBoard = gameboard();
             cpuPlayArea = cpuBoard.playArea();
-            destroyerIcon.classList.remove('red-filter');
-            battleshipIcon.classList.remove('red-filter');
-            carrierIcon.classList.remove('red-filter');
-            patrolIcon.classList.remove('red-filter');
-            submarineIcon.classList.remove('red-filter');
-            enemyDestroyerIcon.classList.remove('red-filter');
-            enemyBattleshipIcon.classList.remove('red-filter');
-            enemyCarrierIcon.classList.remove('red-filter');
-            enemyPatrolIcon.classList.remove('red-filter');
-            enemySubmarineIcon.classList.remove('red-filter');
+            friendlyIcons.forEach((icon) => {
+                icon.classList.remove('red-filter');
+            })
+            enemyIcons.forEach((icon) => {
+                icon.classList.remove('red-filter');
+            })
+            controlsDialogue.style.height = '2rem';
+            placementOptions.style.height = '10%';
+            bothFrames.forEach((frame) => {
+                frame.style.height = '45rem';
+            })
             paintDOM.paintFriendly(p1Board, p1PlayArea);
             centerFriendly();
+            paintDOM.highlightFriendly();
+            hoverPreview();
             randomizeButton.style.display = 'inline'
             resetPlacementButton.style.display = 'inline'
             confirmButton.style.display = 'inline'
         });
     };
 
-
     const checkShipsDown = (board, player) => {
         board.ships.forEach((ship) => {
-            // console.log(ship.hits, ship.name)
             if (ship.hits === 5 && ship.name === 'carrier') {
                 if (player === 'enemy') {
                     enemyCarrierIcon.classList.add('red-filter');
@@ -331,8 +340,6 @@ const gameloop = () => {
             }
         })
     }
-
-
 
     const checkForP1Win = () => {
         if (cpuBoard.allSunk()) {
