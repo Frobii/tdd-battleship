@@ -14,6 +14,7 @@ body {
     justify-content: space-between;
     margin: 0px;
     font-family: anta;
+    text-shadow: 0px 0px 6px rgba(0,0,0,0.6);
 }
 
 a {
@@ -73,6 +74,7 @@ a:hover {
 .grid {
     box-sizing: border-box;
     border: 2px solid rgb(255, 255, 255);
+    box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.464);
     height: 28rem;
     width: 28rem;
     margin-top: 10px;
@@ -209,7 +211,7 @@ a:hover {
 }
 
 .enemy-hit {
-    background-image: linear-gradient(to bottom right, #c86523, #e01e1e);
+    background-image: linear-gradient(to bottom right, #e37e3b, #e01e1e);
 }
 
 .ship {
@@ -217,7 +219,7 @@ a:hover {
 }
 /* Maintain friendly-hit's priority over .ship styles */
 .friendly-hit {
-    background-image: linear-gradient(to bottom right, #c86523, #e01e1e);
+    background-image: linear-gradient(to bottom right, #e37e3b, #e01e1e);
 }
 
 .hover-placement {
