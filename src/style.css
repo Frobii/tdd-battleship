@@ -1,11 +1,19 @@
+@font-face {
+    font-family: anta;
+    src: url(../src/fonts/Anta-Regular.ttf);
+}
+
 body {
-    background-color: rgba(0, 0, 0, 0.795);
+    background-image: linear-gradient(#1d628a, #0e0445);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     color: white;
     display: flex;
     flex-direction: column;
     height: 100vh;
     justify-content: space-between;
     margin: 0px;
+    font-family: anta;
 }
 
 a {
@@ -45,6 +53,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.464);
 }
 
 .friendly-frame {
@@ -52,7 +61,7 @@ a:hover {
 }
 
 .frame.highlight-frame {
-    background-color: rgba(128, 128, 128, 0.541);
+    background-image: linear-gradient(to top right, #1e21217b, #4a4a6056);
 }
 
 .board-title {
@@ -63,10 +72,12 @@ a:hover {
 
 .grid {
     box-sizing: border-box;
-    border: 2px solid white;
+    border: 2px solid rgb(255, 255, 255);
     height: 28rem;
     width: 28rem;
     margin-top: 10px;
+    border-radius: 5px;
+    padding-bottom: 2px;
 }
 
 .grid-row {
@@ -79,6 +90,7 @@ a:hover {
     height: 100%;
     width: 10%;
     border: 0.5px solid grey;
+    border-radius: 5px;
 }
 
 .controls-dialogue {
@@ -193,29 +205,28 @@ a:hover {
 }
 
 .miss {
-    background-color: turquoise;
+    background-image: linear-gradient(#238cc8, #3561cf);
 }
 
 .enemy-hit {
-    background-color: red;
+    background-image: linear-gradient(to bottom right, #c86523, #e01e1e);
 }
 
 .ship {
-    background-color: lime;
+    background-image: linear-gradient(rgb(44, 213, 32), #65a739)
 }
 /* Maintain friendly-hit's priority over .ship styles */
 .friendly-hit {
-    background-color: red;
+    background-image: linear-gradient(to bottom right, #c86523, #e01e1e);
 }
 
 .hover-placement {
-    background-color: rgba(0, 255, 0, 0.623);
+    background-image: linear-gradient(rgba(39, 172, 29, 0.46), #65a73974);
 }
 
 .game-over-screen {
     position: absolute;
     display: none;
-    /* display: flex; */
     height: 100vh;
     width: 100vw;
     background-color: rgba(0, 0, 0, 0.459);
