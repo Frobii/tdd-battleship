@@ -51,7 +51,7 @@ const gameloop = () => {
     const orientationEvent = (() => {
         changeOrientation = (event) => {
             if (event.key.toUpperCase() === 'R') {
-                if (orientation == 'h') {
+                if (orientation === 'h') {
                     orientation = 'v'
                 } else {
                     orientation = 'h'
